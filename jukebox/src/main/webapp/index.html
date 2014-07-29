@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="favicon.ico">
+
+<title>Cover Template for Bootstrap</title>
+<!-- Bootstrap core CSS -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="bootstrap/cover.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<div class="site-wrapper">
+
+
+
+			<div class="site-wrapper-inner">
+		<style>
+#reloj {
+	border-radius: 5px;
+	color: #FFFFFF;
+	font-family: Arial, Verdana;
+	font-weight: bold;
+	font-size: 35px;
+	font-weight: bold;
+
+	
+	
+}
+</style>
+		<div id="tiempo"  align="center"   style="font-family: verdana; font-size: 35px;">
+				</div>
+			<table id="reloj" border='0' align="center">
+				<tr>
+					<td><div id='hora'></div></td>
+					<td><div>:</div></td>
+					<td><div id='minuto'></div></td>
+					<td><div>:</div></td>
+					<td><div id='segundo'></div></td>
+				</tr>
+			</table>
+			<script type="text/javascript">
+				Reloj();
+				function Reloj() {
+					var tiempo = new Date();
+					var hora = tiempo.getHours();
+					var minuto = tiempo.getMinutes();
+					var segundo = tiempo.getSeconds();
+					document.getElementById('hora').innerHTML = hora;
+					document.getElementById('minuto').innerHTML = minuto;
+					document.getElementById('segundo').innerHTML = segundo;
+					setTimeout('Reloj()', 1000);
+					str_hora = new String(hora);
+					if (str_hora.length == 1) {
+						document.getElementById('hora').innerHTML = '0' + hora;
+					}
+					str_minuto = new String(minuto);
+					if (str_minuto.length == 1) {
+						document.getElementById('minuto').innerHTML = '0'
+								+ minuto;
+					}
+					str_segundo = new String(segundo);
+					if (str_segundo.length == 1) {
+						document.getElementById('segundo').innerHTML = '0'
+								+ segundo;
+					}
+				}
+			</script>
+			
+				
+			
+			<script language="javascript">
+				var meses = new Array("Enero", "Febrero", "Marzo", "Abril",
+						"Mayo", "Junio", "Julio", "Agosto", "Septiembre",
+						"Octubre", "Noviembre", "Diciembre");
+				var diasSemana = new Array("Domingo", "Lunes", "Martes",
+						"Miércoles", "Jueves", "Viernes", "Sábado");
+				var f = new Date();
+				document.getElementById("tiempo").innerHTML = "Hoy "
+						+ diasSemana[f.getDay()] + ", " + f.getDate() + " de "
+						+ meses[f.getMonth()] + " de " + f.getFullYear();
+			</script>
+				<div class="cover-container">
+
+
+
+					<div class="inner cover">
+						<h1 class="cover-heading2">Generate a ticket</h1>
+						<button type="button" class="btn btn-default" id="pepe">button</button>
+						<!-- <div id="pepe">hola</div> -->
+
+						<div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle"
+								data-toggle="dropdown">
+								Select Category <span class="caret"></span>
+							</button>
+
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Diamond</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Gold </a></li>
+								<li class="divider"></li>
+								<li><a href="#">Silver </a></li>
+
+
+							</ul>
+						</div>
+						<form action="" method="POST" role="form">
+							<legend>Here the code appears</legend>
+							<h1 class="cover-heading">...</h1>
+
+						</form>
+					</div>
+
+					<div class="mastfoot">
+						<div class="inner">
+							<p>First testing</p>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="js/ticket.js"></script>
+	<script type="text/javascript" src="js/api.js"></script>
+
+	<script type="bootstrap/text/javascript"> 
+        $('li a').click(function(){ 
+
+          var $this= $(this); 
+          console.log('click en ' + $this.html()); 
+        }) 
+    </script>
+</body>
+</html>

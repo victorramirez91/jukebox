@@ -1,0 +1,136 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>TFG</groupId>
+  <artifactId>jukebox</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>jukebox Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>servlet-api</artifactId>
+	<version>2.5</version>
+</dependency>
+    <dependency>
+	<groupId>commons-httpclient</groupId>
+	<artifactId>commons-httpclient</artifactId>
+	<version>3.1</version>
+</dependency>
+    
+    
+    
+    
+    <dependency>
+       		<groupId>org.hibernate</groupId>
+       		<artifactId>hibernate-core</artifactId>
+       		<version>3.3.2.GA</version>
+       		<exclusions>
+     			<exclusion>
+       			<groupId>cglib</groupId>
+       			<artifactId>cglib</artifactId>
+    			</exclusion>
+   			</exclusions>
+    	</dependency>
+    	
+		<!--  Se añade cglib-nodep que no da problemas -->
+    	<dependency>
+        	<groupId>cglib</groupId>
+        	<artifactId>cglib-nodep</artifactId>
+        	<version>2.1_3</version>
+    	</dependency>
+    	
+    	<dependency>
+       		<groupId>org.hibernate</groupId>
+       		<artifactId>hibernate-annotations</artifactId>
+       		<version>3.4.0.GA</version>
+    	</dependency>
+    	
+    	<dependency>
+       		<groupId>org.hibernate</groupId>
+       		<artifactId>hibernate-commons-annotations</artifactId>
+       		<version>3.3.0.ga</version>
+       		<exclusions>
+       			<exclusion>
+       			<artifactId>cglib</artifactId>
+       			<groupId>cglib</groupId>
+       			</exclusion>
+       		</exclusions>
+    	</dependency>
+    	<dependency>
+	<groupId>com.efsavage.jquery</groupId>
+	<artifactId>jquery-maven</artifactId>
+	<version>1.7.2</version>
+</dependency>
+    	
+    	<dependency>
+       		<groupId>org.hibernate</groupId>
+       		<artifactId>hibernate-entitymanager</artifactId>
+       		<version>3.4.0.GA</version>
+    	</dependency> 
+		<!--  END HIBERNATE DEPENDENCIES  -->
+		<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.2.4</version>
+	</dependency>
+	<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>1.18.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-core</artifactId>
+			<version>1.18.1</version>
+		</dependency>
+		<dependency>
+				<groupId>com.sun.jersey</groupId>
+				<artifactId>jersey-servlet</artifactId>
+				<version>1.18.1</version>
+		</dependency>
+		
+			<dependency>
+				<groupId>com.sun.jersey</groupId>
+				<artifactId>jersey-bundle</artifactId>
+				<version>1.18.1</version>
+		</dependency>
+					<dependency>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-server</artifactId>
+					<version>1.18.1</version>
+			</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>1.8</version>
+		</dependency>
+		<!--  MYSQL DEPENDENCIES  -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.9</version>
+		</dependency>
+		<!-- LOGGING DEPENDENCIES - LOG4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+  </dependencies>
+  <build>
+    <finalName>jukebox</finalName>
+  </build>
+</project>

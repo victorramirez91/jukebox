@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="src/main/lib/basicplayer3.0.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/commons-logging-api.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/jflac-1.2.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/jl1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/jmactritonusspi1.74.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/jml-1.0b4.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/jspeex0.9.7.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/kj_dsp1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/substance.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/vorbisspi1.0.2.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

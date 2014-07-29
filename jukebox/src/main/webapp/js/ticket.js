@@ -1,0 +1,6 @@
+
+
+$("#pepe").click(function(){
+	 
+	  getticket();
+	});
