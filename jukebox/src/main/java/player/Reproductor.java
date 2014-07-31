@@ -8,6 +8,7 @@ public class Reproductor {
 	 
 	public void Play() throws Exception {
 		  player.play();
+		  
 		}
 		 
 		public void AbrirFichero(String ruta) throws Exception {

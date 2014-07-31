@@ -1,9 +1,11 @@
-package clases;
+package dboperations;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import objects.Ticket;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

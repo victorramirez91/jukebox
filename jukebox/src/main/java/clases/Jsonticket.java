@@ -2,7 +2,6 @@ package clases;
 
 public class Jsonticket {
 	String id;
-
 	public Jsonticket() {
 		super();
 		// TODO Auto-generated constructor stub

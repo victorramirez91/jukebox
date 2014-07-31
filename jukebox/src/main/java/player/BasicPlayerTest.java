@@ -1,6 +1,9 @@
 package player;
+
 import java.io.File;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 import javazoom.jlgui.basicplayer.BasicController;
@@ -12,35 +15,32 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 public class BasicPlayerTest implements BasicPlayerListener
 {
   private PrintStream out = null;
-  BasicController control;
+
   /**
    * Entry point.
    * @param args filename to play.
+ * @throws MalformedURLException 
    */
-  public static void main(String[] args)
+  public static void main(String[] args) 
   {
     BasicPlayerTest test = new BasicPlayerTest();
-    test.play(args[0]); 
+    test.play("C:/Users/Victorz/jukeboxsongs/50 Cent-Window Shopper.mp3"); 
   }
 
     /**
      * Contructor.
      */
   public BasicPlayerTest()
-     {	
+     {
       out = System.out;
      }
-  public void Stopsong() throws BasicPlayerException
-  {
-   control.stop();
-  }
 
-  public void play(String filename)
+  public void play(String filename) 
      {
        // Instantiate BasicPlayer.
       BasicPlayer player = new BasicPlayer();
       // BasicPlayer is a BasicController.
-       control = (BasicController) player;
+      BasicController control = (BasicController) player;
       // Register BasicPlayerTest to BasicPlayerListener events.
       // It means that this object will be notified on BasicPlayer
       // events such as : opened(...), progress(...), stateUpdated(...)
@@ -51,12 +51,11 @@ public class BasicPlayerTest implements BasicPlayerListener
       // Open file, or URL or Stream (shoutcast, icecast) to play.
       control.open(new File(filename));
 
-      // control.open(new URL("http://yourshoutcastserver.com:8000"));
+       //control.open(new URL("http://www.mp3songurl.com/2014/07/31/david-bowie-heroes-4/#.U9pRh_l_uOc"));
 
       // Start playback in a thread.
       control.play();
-      
-      
+
       // If you want to pause/resume/pause the played file then
       // write a Swing player and just call control.pause(),
       // control.resume() or control.stop(). 
@@ -70,8 +69,6 @@ public class BasicPlayerTest implements BasicPlayerListener
       control.setGain(0.85);
       // Set Pan (-1.0 to 1.0).
       control.setPan(0.0);
-      control.seek(5000);
-      
     }
     catch (BasicPlayerException e)
     {
@@ -88,7 +85,12 @@ public class BasicPlayerTest implements BasicPlayerListener
    * @param stream could be File, URL or InputStream
    * @param properties audio stream properties.
    */
-
+  public void opened(Object stream, Map properties)
+  {
+    // Pay attention to properties. It's useful to get duration, 
+    // bitrate, channels, even tag such as ID3v2.
+    display("opened : "+properties.toString()); 
+  }
 
   /**
    * Progress callback while playing.
@@ -102,71 +104,36 @@ public class BasicPlayerTest implements BasicPlayerListener
    * @param pcmdata PCM samples.
    * @param properties audio stream parameters.
   */
-  
+  public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties)
+  {
+    // Pay attention to properties. It depends on underlying JavaSound SPI
+    // MP3SPI provides mp3.equalizer.
+    display("progress : "+properties.toString());
+  }
 
   /**
    * Notification callback for basicplayer events such as opened, eom ...
    * 
    * @param event
    */
-  
+  public void stateUpdated(BasicPlayerEvent event)
+  {
+    // Notification of BasicPlayer states (opened, playing, end of media, ...)
+    display("stateUpdated : "+event.toString());
+  }
 
   /**
    * A handle to the BasicPlayer, plugins may control the player through
    * the controller (play, stop, ...)
    * @param controller : a handle to the player
    */ 
-
+  public void setController(BasicController controller)
+  {
+    display("setController : "+controller);
+  }
 
   public void display(String msg)
   {
     if (out != null) out.println(msg);
-    
   }
-
-public void opened(Object arg0, Map arg1) {
-	// TODO Auto-generated method stub
-	
-}
-
-public void progress(int arg0, long arg1, byte[] arg2, Map arg3) {
-	// TODO Auto-generated method stub
-	
-}
-
-public void setController(BasicController arg0) {
-	// TODO Auto-generated method stub
-	
-}
-
-public void stateUpdated(BasicPlayerEvent arg0) {
-	// TODO Auto-generated method stub
-	
-}
-
-//@Override
-//public void opened(Object stream, Map properties) {
-//	// TODO Auto-generated method stub
-//	 display("opened : "+properties.toString()); 
-//}
-//
-//@Override
-//public void progress(int arg0, long arg1, byte[] arg2, Map properties) {
-//	// TODO Auto-generated method stub
-//	  // Pay attention to properties. It depends on underlying JavaSound SPI
-//    // MP3SPI provides mp3.equalizer.
-//	  display("progress : "+properties.toString());
-//}
-//
-//@Override
-//public void setController(BasicController controller) {
-//	// TODO Auto-generated method stub
-//	display("setController : "+controller);
-//}
-//
-//@Override
-//public void stateUpdated(BasicPlayerEvent event) {
-//	// TODO Auto-generated method stub
-//	 display("stateUpdated : "+event.toString());
-//}
 }

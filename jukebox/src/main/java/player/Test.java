@@ -1,5 +1,10 @@
 package player;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jukebox.IndexSongs;
+
 public class Test {
 	
 	
@@ -7,11 +12,14 @@ public class Test {
 	{
 
 		try {
-		 // Reproductor mi_reproductor = new Reproductor();
-		  BasicPlayerTest test = new BasicPlayerTest();
-		 // mi_reproductor.AbrirFichero("src/main/lib/HOLA.mp3");
-		 // mi_reproductor.Play();
-		  test.play("src/main/lib/HOLA.mp3");
+		  Reproductor mi_reproductor = new Reproductor();
+		  //BasicPlayerTest test = new BasicPlayerTest();
+		  IndexSongs index = new IndexSongs();
+		  List<String> songslist2 = new ArrayList<String>();
+		  songslist2=index.GetSongsName();
+		  mi_reproductor.AbrirFichero("C:/Users/Victorz/jukeboxsongs/"+songslist2.get(4));
+		  mi_reproductor.Play();
+		  //test.play("C:/Users/Victorz/jukeboxsongs/50 Cent-Window Shopper.mp3");
 		  //test.Stopsong();
 		 
 		} catch (Exception ex) {

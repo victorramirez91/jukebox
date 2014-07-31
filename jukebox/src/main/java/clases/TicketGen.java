@@ -4,6 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Random;
 
+import dboperations.DBOperations;
+import objects.Ticket;
+
 
 
 public class TicketGen {
@@ -15,25 +18,14 @@ public class TicketGen {
 		   
 	       int r = rn.nextInt();
 	       System.out.println(r);
-	       int k = rn.nextInt();
 	      String a= Integer.toBinaryString(r);
-	      String otro= Integer.toBinaryString(k);
 	      System.out.println(a.length());
 	      System.out.println(a);
-	      System.out.println(otro.length());
-	      System.out.println(otro);
-	      
-	      int x = r^k;
-	      System.out.println("Primero: "+Integer.toBinaryString(r));
-	      System.out.println("segundo: "+Integer.toBinaryString(k));
-	      
-	      System.out.println("Operacion XOR  "+Integer.toBinaryString(x));
-	      System.out.println("operacion lenght: "+Integer.toBinaryString(x).length());
-	      //En esta parte nos aseguramos que la salida es de 32 bits para poder mapear
+	
 	     
-	      if (Integer.toBinaryString(x).length() < 32)
+	      if (Integer.toBinaryString(r).length() < 32)
 	      {
-	    	    ticket=Integer.toBinaryString(x);
+	    	    ticket=Integer.toBinaryString(r);
 	    	  
 	    	  while(ticket.length() < 32)
 	    	  {
@@ -45,9 +37,12 @@ public class TicketGen {
 	      }
 	      else
 	      {
-	    	  ticket=Integer.toBinaryString(x);
+	    	  ticket=Integer.toBinaryString(r);
 	    	  System.out.println("Este es el definitivo: "+ticket+ " y tiene "+ticket.length()+" bits de longitud");
 	      }
+	      
+	      NullEncriptDecriptImpl ned = new NullEncriptDecriptImpl();
+	      ned.Encript(ticket);
 	      
 	      //Separamos la salida en 5 partes de 6 bits + 2 de control y mapeamos
 	      System.out.println("VAMOS A SEPARAR"+ticket.length());

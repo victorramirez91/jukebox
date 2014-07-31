@@ -1,4 +1,6 @@
-package clases;
+package dboperations;
+
+import objects.Ticket;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
