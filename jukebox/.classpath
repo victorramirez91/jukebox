@@ -42,5 +42,8 @@
 	<classpathentry kind="lib" path="src/main/lib/substance.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/tritonus_share.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/vorbisspi1.0.2.jar"/>
+	<classpathentry kind="lib" path="src/main/lib/jlgui3.0.jar"/>
+	<classpathentry kind="lib" path="playlist/de.huxhorn.sulky.sounds-api-0.9.14-sources.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spotify-web-api-java"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

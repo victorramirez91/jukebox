@@ -31,13 +31,22 @@ import javax.ws.rs.core.Response;
 
 
 
+
+
+
+
 import objects.Ticket;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+import jukebox.IndexSongs;
 import player.Test;
-import player.pruebaplayer;
+
 import clases.Jsonticket;
 import clases.TicketGen;
+
+
+
+
 
 
 
@@ -56,11 +65,13 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
+import dboperations.DBOperations;
+
 
 @Path("/api")
 public class ApiJukebox {
 	
-	private static final String SERVER_UPLOAD_LOCATION_FOLDER = "C:/xampp/htdocs/images/";
+	
 
 		@GET
 		@Path("/prova/{param}")
@@ -101,6 +112,57 @@ public class ApiJukebox {
 	   
 	    	
 	    }	
+		
+		@GET
+		@Path("/getsongs")
+		public String getSongs(@Context HttpServletRequest request ) {
+			
+			System.out.println("getticket");
+			
+			IndexSongs index = new IndexSongs();
+			
+			//List<String> names = index.GetSongsName();
+			String a = index.getSongsJson();
+			return a;
+
+	   
+	    	
+	    }	
+		@GET
+		@Path("/queque_song/{idsong}/{key}")
+		public String queque_song(
+				@PathParam("idsong") String idsong,
+				@PathParam("key") String key,
+				@Context HttpServletRequest request) {
+			
+		   DBOperations op= new DBOperations();
+		   int checking = op.checkTicket(key);
+		   if(checking == 0)
+		   {
+			   System.out.println("Ticket incorrecto");
+			   
+			   //Se enviara a la playList....
+			   return "Incorrecto";
+		   }
+		   if(checking == 1)
+		   {
+			   System.out.println("EL ticket es correcto");
+			   
+			   //Se enviara a la playList....
+			   return "El ticket es correcto";
+		   }
+		   if(checking == 2)
+		   {
+			   System.out.println("El tiquet ha caducado");
+			   
+			   //Se enviara a la playList....
+			   return "El tiquet ha caducado";
+		   }
+		   else 
+			   return "error";
+		    
+			
+		}
 		
 		
 }

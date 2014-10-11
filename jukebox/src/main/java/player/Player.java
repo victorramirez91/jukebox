@@ -1,6 +1,8 @@
 package player;
 
 import java.io.File;
+
+
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,27 +14,23 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
-public class BasicPlayerTest implements BasicPlayerListener
-{
-  private PrintStream out = null;
+public class Player implements BasicPlayerListener{
+	
+	private static Player instance = null;
+	static Test test = new Test();
+	private PrintStream out = null;
 
-  /**
-   * Entry point.
-   * @param args filename to play.
- * @throws MalformedURLException 
-   */
-  public static void main(String[] args) 
-  {
-    BasicPlayerTest test = new BasicPlayerTest();
-    test.play("C:/Users/Victorz/jukeboxsongs/50 Cent-Window Shopper.mp3"); 
-  }
-
-    /**
-     * Contructor.
-     */
-  public BasicPlayerTest()
+	public static Player getInstance(){
+		if( instance == null ) {
+			instance = new Player();
+		}
+			
+		return instance;
+	}
+  private Player()
      {
       out = System.out;
+      
      }
 
   public void play(String filename) 
@@ -90,6 +88,7 @@ public class BasicPlayerTest implements BasicPlayerListener
     // Pay attention to properties. It's useful to get duration, 
     // bitrate, channels, even tag such as ID3v2.
     display("opened : "+properties.toString()); 
+    
   }
 
   /**
@@ -108,7 +107,7 @@ public class BasicPlayerTest implements BasicPlayerListener
   {
     // Pay attention to properties. It depends on underlying JavaSound SPI
     // MP3SPI provides mp3.equalizer.
-    display("progress : "+properties.toString());
+    //display("progress : "+properties.toString());
   }
 
   /**
@@ -119,7 +118,9 @@ public class BasicPlayerTest implements BasicPlayerListener
   public void stateUpdated(BasicPlayerEvent event)
   {
     // Notification of BasicPlayer states (opened, playing, end of media, ...)
+	  
     display("stateUpdated : "+event.toString());
+    test.netxSong(event.toString());
   }
 
   /**
