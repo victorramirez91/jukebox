@@ -1,24 +1,14 @@
 package api;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
@@ -35,14 +25,27 @@ import javax.ws.rs.core.Response;
 
 
 
-import objects.Ticket;
-import javazoom.jlgui.basicplayer.BasicPlayer;
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-import jukebox.IndexSongs;
-import player.Test;
 
-import clases.Jsonticket;
+
+
+
+
+
+
+
+import objects.Ticket;
+import objects.TrackMaped;
+import jukebox.IndexSongs;
+import spotify.SpotifyOperations;
 import clases.TicketGen;
+
+
+
+
+
+
+
+
 
 
 
@@ -61,15 +64,17 @@ import clases.TicketGen;
 //import com.eetac.pycto.managers.ServerCACR;
 //import com.eetac.pycto.models.CA_CR;
 import com.google.gson.Gson;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
+import com.wrapper.spotify.exceptions.WebApiException;
+import com.wrapper.spotify.models.Track;
 
 import dboperations.DBOperations;
 
 
 @Path("/api")
 public class ApiJukebox {
+	
+	List<Track> result_s = new ArrayList<Track>();
+	SpotifyOperations op = SpotifyOperations.getInstance();
 	
 	
 
@@ -163,6 +168,73 @@ public class ApiJukebox {
 		    
 			
 		}
+		
+		@GET
+		@Path("/search_song/{search_s}")
+		public String search_song(
+				@PathParam("search_s") String search_s,
+				
+				@Context HttpServletRequest request)  {
+			System.out.println("1");
+			System.out.println("VAMOS A BUSCAR: "+search_s);
+			try {
+				
+			System.out.println("2");
+//			SpotifyOperations op = SpotifyOperations.getInstance();
+			System.out.println("4");
+			result_s= op.searchTrack(search_s);
+			
+			int i = 0;
+			System.out.println("HOLAAAAAA:   "+result_s.get(1).getArtists().get(0).getName());
+			List <TrackMaped> traks = new ArrayList<TrackMaped>();
+			while (i < result_s.size())
+			{
+				result_s.get(i).getAlbum().getImages().get(0);
+				TrackMaped map = new TrackMaped(result_s.get(i).getArtists().get(0).getName(), result_s.get(i).getName(), Integer.toString(result_s.get(i).getDuration()), result_s.get(i).getId(), result_s.get(i).getAlbum().getImages().get(0).getUrl());
+				traks.add(map);
+				i++;
+			}
+			
+			
+			
+			Gson gson = new Gson();		
+			  String json_result_s =gson.toJson(traks);
+			System.out.println(json_result_s);
+			return json_result_s;
+			
+		    	   
+		    	   
+		    	} catch (Exception e) {
+		    	   System.out.println("Something went wrong!");
+		    	   return "error";
+		    	}
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		@GET
+		@Path("/insertSpoti_song/{song}")
+		public String insertSpoti_song(
+				@PathParam("song") String song,
+				
+				@Context HttpServletRequest request) throws IOException, WebApiException  {
+				String respuesta =op.addSong(song);
+				System.out.println(respuesta);
+			
+			
+			return null;
+		}
+		
+		
+		
+		
+		
 		
 		
 }

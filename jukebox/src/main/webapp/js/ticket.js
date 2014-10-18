@@ -1,5 +1,3 @@
-
-
 $("#pepe").click(function(){
 	 
 	  getticket();

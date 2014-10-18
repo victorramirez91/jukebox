@@ -4,8 +4,6 @@ import java.io.File;
 
 
 import java.io.PrintStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Map;
 
 import javazoom.jlgui.basicplayer.BasicController;
@@ -38,7 +36,7 @@ public class Player implements BasicPlayerListener{
        // Instantiate BasicPlayer.
       BasicPlayer player = new BasicPlayer();
       // BasicPlayer is a BasicController.
-      BasicController control = (BasicController) player;
+      BasicController control = player;
       // Register BasicPlayerTest to BasicPlayerListener events.
       // It means that this object will be notified on BasicPlayer
       // events such as : opened(...), progress(...), stateUpdated(...)

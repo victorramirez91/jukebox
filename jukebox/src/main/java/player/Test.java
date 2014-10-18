@@ -3,10 +3,6 @@ package player;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.midi.Track;
-
-import com.wrapper.spotify.Api;
-
 import jukebox.IndexSongs;
 
 public class Test {

@@ -3,11 +3,12 @@ package dboperations;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.management.Query;
+
 import objects.Ticket;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
@@ -57,6 +58,7 @@ public class DBOperations {
 			
 			
 			SQLQuery query = sesion.createSQLQuery("SELECT * FROM ticket WHERE idticket = :key");
+			
 			query.addEntity(Ticket.class);
 			query.setString("key", key);
 			sesion.beginTransaction();
