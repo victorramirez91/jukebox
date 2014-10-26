@@ -231,6 +231,26 @@ public class ApiJukebox {
 			return null;
 		}
 		
+		@GET
+		@Path("/getSpoti_song/{gtrack}")
+		public String getSpoti_song(
+				@PathParam("gtrack") String gtrack,
+				
+				@Context HttpServletRequest request) throws IOException, WebApiException  {
+				Track respuesta =op.getTrack(gtrack);
+				
+				System.out.println("EN API: "+respuesta.getName());
+				TrackMaped map2 = new TrackMaped(respuesta.getArtists().get(0).getName(), respuesta.getName(), Integer.toString(respuesta.getDuration()), respuesta.getId(), respuesta.getAlbum().getImages().get(0).getUrl());
+			
+				Gson gson2 = new Gson();		
+				String json_result_s2 =gson2.toJson(map2);
+				System.out.println(json_result_s2);
+				return json_result_s2;
+				
+			
+		}
+		
+		
 		
 		
 		

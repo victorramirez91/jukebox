@@ -1,6 +1,20 @@
+
+$( document ).ready(function() {
+var smoker = getURLParameter('id');
+
+getSpotiSong(smoker);
+});
+
+
+function getURLParameter(name) {
+  return decodeURI(
+   (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+   );
+}
+
 $("#key_button").click(function(){
-	var key_input = $('#key_input').val();
-	alert(key_input)
+	var idpet = getURLParameter('id');
+	var track = $('#key_input').val();
 	
-	check_key(key_input);
+	getSpotiSongs (track);
 	});

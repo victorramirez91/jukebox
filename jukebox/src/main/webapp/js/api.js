@@ -1,5 +1,5 @@
-var API_BASE_URL = "http://192.168.1.134:8080/jukebox/rest/api/";
-
+	var IP = "http://192.168.1.132:8080/jukebox"
+var API_BASE_URL = IP+"/rest/api/";
 
 
 function getticket() {
@@ -48,7 +48,6 @@ function check_key (key_input) {
 			
 
 			
-			
 		  
 			
 			
@@ -72,10 +71,21 @@ function getSpotiSongs(track) {
 		dataType : 'json',
 		success : function(data, status, jqxhr) {
 			var response = data;
+			$('#prova2').show();
 			 $.each(response, function (index, value) {
  		
- 	 	$('#songs-data > tbody').append('<tr>      <td><img src="' + value.image + '" style="width:304px;height:228px"></td>  <td><a href="#"> ' + value.Name + '</a></td><td><a href="#"> ' + value.Artist + '</a></td><td><a href="#"> ' + value.duration + '</a></td></tr>');
-		
+ 	 	$('#songs-data').append("<a href='Insertkey.html?id="+value.id+"'' ><div class='cancion' id = '"+value.id+"' > <div class='contenedorImagen'>"+
+    				"<img src='"+ value.image +" ' class='imagenCancion' alt=''>"+
+    			"</div>"+
+    			"<div class='contenedorTexto'>"+
+					"<div class='contenedorCancion'>"+ value.Name + "</div>"+
+					"<div class='contenedorAlbum'>"  + value.Artist +"</div>"+
+					"<div class='contenedortiempo'>"+ value.duration +"</div>"+
+
+				"</div>"+
+				"<div class='clear'></div>"+
+    		"</div></a>");
+ 	 
 			 });
 			 },
 				error : function(jqXHR, options, error) {
@@ -85,6 +95,42 @@ function getSpotiSongs(track) {
 }
 
 
+function getSpotiSong(track) {
+	
+	var url = API_BASE_URL + 'getSpoti_song/'+track;
+	
+
+	$.ajax({
+		url : url,
+		type : 'GET',
+		
+		crossDomain : true,
+		dataType : 'json',
+		success : function(data, status, jqxhr) {
+			var response = data;
+			
+			
+			 
+ 		
+ 	 	$('#songs-data').append("<a href='#' ><div class='cancion' id = '"+data.id+"' > <div class='contenedorImagen'>"+
+    				"<img src='"+ data.image +" ' class='imagenCancion' alt=''>"+
+    			"</div>"+
+    			"<div class='contenedorTexto'>"+
+					"<div class='contenedorCancion'>"+ data.Name + "</div>"+
+					"<div class='contenedorAlbum'>"  + data.Artist +"</div>"+
+					"<div class='contenedortiempo'>"+ data.duration +"</div>"+
+
+				"</div>"+
+				"<div class='clear'></div>"+
+    		"</div></a>");
+ 	 
+			 
+			 },
+				error : function(jqXHR, options, error) {
+					alert(jqXHR + error + options);
+				}
+			});
+}
 
 
 

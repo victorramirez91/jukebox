@@ -7,6 +7,7 @@ import java.util.List;
 import com.wrapper.spotify.Api;
 import com.wrapper.spotify.exceptions.WebApiException;
 import com.wrapper.spotify.methods.AddTrackToPlaylistRequest;
+import com.wrapper.spotify.methods.TrackRequest;
 import com.wrapper.spotify.methods.TrackSearchRequest;
 import com.wrapper.spotify.methods.authentication.RefreshAccessTokenRequest;
 import com.wrapper.spotify.models.Page;
@@ -88,6 +89,25 @@ public class SpotifyOperations {
     	   //umero maximo de resultados
     	  // trackSearchResult.setLimit(200);
     	   return trackSearchResult.getItems();
+    	   
+    	} catch (Exception e) {
+    	   System.out.println("Something went wrong!" + e.getMessage());
+    	   return null;
+    	}
+		
+    }
+    
+    public Track getTrack(String gtrack)
+    {
+    	
+    	System.out.println("3");
+    	System.out.println("En operaciones buscamos id: "+gtrack);
+    	
+    	final TrackRequest request = api.getTrack(gtrack).build();
+    	try {
+    		  Track track = request.get();
+    		  System.out.println("La respuesta en operaciones es: "+track.getName());
+    		 return track;
     	   
     	} catch (Exception e) {
     	   System.out.println("Something went wrong!" + e.getMessage());
