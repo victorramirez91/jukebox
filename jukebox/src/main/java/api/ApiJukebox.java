@@ -75,6 +75,7 @@ public class ApiJukebox {
 	
 	List<Track> result_s = new ArrayList<Track>();
 	SpotifyOperations op = SpotifyOperations.getInstance();
+	 DBOperations opdb;
 	
 	
 
@@ -138,10 +139,10 @@ public class ApiJukebox {
 		public String queque_song(
 				@PathParam("idsong") String idsong,
 				@PathParam("key") String key,
-				@Context HttpServletRequest request) {
+				@Context HttpServletRequest request) throws IOException, WebApiException {
 			
-		   DBOperations op= new DBOperations();
-		   int checking = op.checkTicket(key);
+			opdb= new DBOperations();
+		   int checking = opdb.checkTicket(key);
 		   if(checking == 0)
 		   {
 			   System.out.println("Ticket incorrecto");
@@ -152,9 +153,12 @@ public class ApiJukebox {
 		   if(checking == 1)
 		   {
 			   System.out.println("EL ticket es correcto");
+			   Track respuestapet =op.getTrack(idsong);
 			   
+			   String respuesta =op.addSong(respuestapet.getUri());
+				System.out.println(respuesta);
 			   //Se enviara a la playList....
-			   return "El ticket es correcto";
+			   return "El ticket es correcto:"+ respuesta;
 		   }
 		   if(checking == 2)
 		   {
@@ -224,7 +228,9 @@ public class ApiJukebox {
 				@PathParam("song") String song,
 				
 				@Context HttpServletRequest request) throws IOException, WebApiException  {
-				String respuesta =op.addSong(song);
+				
+			System.out.println("se quiere añadir: "+ song);
+			String respuesta =op.addSong(song);
 				System.out.println(respuesta);
 			
 			

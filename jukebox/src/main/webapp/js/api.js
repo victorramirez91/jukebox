@@ -25,9 +25,9 @@ function getticket() {
 }
 
 
-function check_key (key_input) {
+function check_key (idpet, key_input) {
 	
-	var url = API_BASE_URL + 'queque_song/111/'+ key_input;
+	var url = API_BASE_URL + 'queque_song/'+idpet+'/'+ key_input;
 	alert(key_input)
 	
 			$.ajax({

@@ -14,7 +14,7 @@ function getURLParameter(name) {
 
 $("#key_button").click(function(){
 	var idpet = getURLParameter('id');
-	var track = $('#key_input').val();
+	var keyins = $('#key_input').val();
 	
-	getSpotiSongs (track);
+	check_key (idpet,keyins);
 	});

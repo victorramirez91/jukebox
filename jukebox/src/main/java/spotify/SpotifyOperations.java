@@ -58,6 +58,7 @@ public class SpotifyOperations {
  	 
  	 
  	api.setAccessToken(refreshAccessTokenResponse.getAccessToken());
+ 	
 	   
  	
  	final List<String> tracksToAdd = Arrays.asList(track);
@@ -67,7 +68,8 @@ public class SpotifyOperations {
 
  	final AddTrackToPlaylistRequest request2 = api.addTracksToPlaylist("errezeta1", "68a1ualmfcXujcZYkjYMCD", tracksToAdd).position(-1).build();
 
- 	try {
+ 	try {	
+ 		
  	  request2.get(); // Empty response
  	 return track+"  Añadida";
  	} catch (Exception e) {
