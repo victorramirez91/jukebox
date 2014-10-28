@@ -29,7 +29,7 @@ public class CreateDataBase {
 		SessionFactory factory = config.buildSessionFactory();
 		Session sesion = factory.getCurrentSession();
 		sesion.beginTransaction();		
-		Ticket campeonato2= new Ticket("test","xxx","aaa");
+		Ticket campeonato2= new Ticket("test2","xxx2","aaa2",true);
 		sesion.save(campeonato2);
 
 		

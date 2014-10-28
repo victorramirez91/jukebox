@@ -9,12 +9,28 @@ public class Ticket {
 	String idticket;
 	String date;
 	String category;
+	Boolean used;
 	
+	public Boolean getUsed() {
+		return used;
+	}
+
+	public void setUsed(Boolean used) {
+		this.used = used;
+	}
+
 	public Ticket(String idticket, String date, String category) {
 		super();
 		this.idticket = idticket;
 		this.date = date;
 		this.category = category;
+	}
+	public Ticket(String idticket, String date, String category, Boolean used) {
+		super();
+		this.idticket = idticket;
+		this.date = date;
+		this.category = category;
+		this.used = used;
 	}
 	
 	public Ticket() {

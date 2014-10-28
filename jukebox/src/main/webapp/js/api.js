@@ -1,4 +1,4 @@
-	var IP = "http://192.168.1.132:8080/jukebox"
+	var IP = "http://10.189.166.59:8080/jukebox"
 var API_BASE_URL = IP+"/rest/api/";
 
 

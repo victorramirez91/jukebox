@@ -1,5 +1,6 @@
 package api;
 import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -166,6 +167,13 @@ public class ApiJukebox {
 			   
 			   //Se enviara a la playList....
 			   return "El tiquet ha caducado";
+		   }
+		   if(checking == 3)
+		   {
+			   System.out.println("El tiquet ya se ha usado");
+			   
+			   //Se enviara a la playList....
+			   return "El tiquet ya se ha usado";
 		   }
 		   else 
 			   return "error";

@@ -34,7 +34,7 @@ public class DBOperations {
 		{
 			//añade ticket a la BBDD
 			
-			
+			ticket.setUsed(false);
 			Session sesion = factory.openSession();
 			System.out.println("addticket");
 			sesion.beginTransaction();
@@ -50,6 +50,11 @@ public class DBOperations {
 	 public int checkTicket(String  key)
 		{
 			//chequea si la clave esta en la base de datos
+		 
+		 	//0---> NO existe
+		 	//1---> Valido
+		 	//2----> Caducado
+		 	//3----> Tiquet usado
 			System.out.println(key);
 			
 			Session sesion = factory.openSession();
@@ -69,7 +74,16 @@ public class DBOperations {
 			if (ticket == null) {
 				System.out.println("No existe");
 				return 0;
-			} else {
+			} 
+			
+			if(ticket.getUsed()==true) {
+				
+				return 3;
+			}
+			
+			if(ticket.getUsed()==false) 
+			
+			{
 				System.out.println("Existe");
 				String timestamp = ticket.getDate();
 				//String text = "2011-10-02 18:48:05.123456";
@@ -87,6 +101,13 @@ public class DBOperations {
 		         if(hora < 0.5)
 		         {
 		        	 System.out.println("No ha pasado media hora");
+		        	Session sesion2 = factory.openSession();
+		        	 ticket.setUsed(true);
+		        	 sesion2.beginTransaction();
+		 			sesion2.update(ticket);
+		 			sesion2.getTransaction().commit();
+		 			System.out.println("Ticket saved correctly.");
+		 			sesion2.close();
 		        	 return 1;
 		         }
 		         else {
@@ -95,6 +116,7 @@ public class DBOperations {
 		         }
 				
 			}
+			return 0;
 			
 			
 			
