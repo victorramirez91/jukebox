@@ -1,7 +1,7 @@
 
 $( document ).ready(function() {
 var smoker = getURLParameter('id');
-
+$('#back_button').hide();
 getSpotiSong(smoker);
 });
 
@@ -17,4 +17,9 @@ $("#key_button").click(function(){
 	var keyins = $('#key_input').val();
 	
 	check_key (idpet,keyins);
+	});
+
+$("#back_button").click(function(){
+	var url      = window.location.href;
+	$(location).attr('href',url);
 	});

@@ -15,8 +15,9 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 public class Player implements BasicPlayerListener{
 	
 	private static Player instance = null;
-	static Test test = new Test();
+	//static Test test = new Test();
 	private PrintStream out = null;
+	PlayerController pc = new PlayerController();
 
 	public static Player getInstance(){
 		if( instance == null ) {
@@ -118,7 +119,8 @@ public class Player implements BasicPlayerListener{
     // Notification of BasicPlayer states (opened, playing, end of media, ...)
 	  
     display("stateUpdated : "+event.toString());
-    test.netxSong(event.toString());
+    System.out.println(event.toString());
+    pc.nextSong(event.toString());
   }
 
   /**

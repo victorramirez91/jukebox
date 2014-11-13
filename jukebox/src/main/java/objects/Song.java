@@ -2,24 +2,36 @@ package objects;
 
 public class Song {
 	
-	String artist;
+	String Artist;
 	String Name;
 	String genre;
 	String image;
 	String album;
 	
 	
+	public Song() {
+		super();
+	}
+	public Song(String artist, String name, String genre, String image,
+			String album) {
+		super();
+		Artist = artist;
+		Name = name;
+		this.genre = genre;
+		this.image = image;
+		this.album = album;
+	}
 	public Song(String artist, String name) {
 		super();
-		this.artist = artist;
+		this.Artist = artist;
 		Name = name;
 	
 	}
 	public String getArtist() {
-		return artist;
+		return Artist;
 	}
 	public void setArtist(String artist) {
-		this.artist = artist;
+		this.Artist = artist;
 	}
 	public String getName() {
 		return Name;

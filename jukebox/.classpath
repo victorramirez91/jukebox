@@ -29,7 +29,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="src/main/lib/basicplayer3.0.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/commons-logging-api.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/jflac-1.2.jar"/>
@@ -40,13 +39,13 @@
 	<classpathentry kind="lib" path="src/main/lib/jorbis-0.0.15.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/jspeex0.9.7.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/kj_dsp1.1.jar"/>
-	<classpathentry kind="lib" path="src/main/lib/mp3spi1.9.4.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/substance.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/tritonus_share.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/vorbisspi1.0.2.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/jlgui3.0.jar"/>
 	<classpathentry kind="lib" path="playlist/de.huxhorn.sulky.sounds-api-0.9.14-sources.jar"/>
 	<classpathentry kind="lib" path="target/jukebox/WEB-INF/lib/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="playlist/mp3spi1.9.5.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/spotify-web-api-java">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="spotify-web-api-java"/>

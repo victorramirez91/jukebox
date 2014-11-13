@@ -153,7 +153,11 @@
             <version>17.0-rc2</version>
         </dependency>
         
-	
+	<dependency>
+  <groupId>com.mpatric</groupId>
+  <artifactId>mp3agic</artifactId>
+  <version>0.8.2</version>
+</dependency>
         
   </dependencies>
   <build>

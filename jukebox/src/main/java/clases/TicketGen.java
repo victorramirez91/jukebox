@@ -79,7 +79,7 @@ public class TicketGen {
 	     
 	      String time =getTime();
 	      Ticket ticketgenerated = new Ticket(userkey,time,"1");
-	      DBOperations operations = new DBOperations();
+	      DBOperations operations = DBOperations.getInstance();
 	      operations.addTicket(ticketgenerated);
 	       
 		return ticketgenerated;

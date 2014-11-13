@@ -131,10 +131,11 @@ public class ApiJukebox {
 			//List<String> names = index.GetSongsName();
 			String a = index.getSongsJson();
 			return a;
-
-	   
+		
 	    	
 	    }	
+		
+		
 		@GET
 		@Path("/queque_song/{idsong}/{key}")
 		public String queque_song(
@@ -142,7 +143,7 @@ public class ApiJukebox {
 				@PathParam("key") String key,
 				@Context HttpServletRequest request) throws IOException, WebApiException {
 			
-			opdb= new DBOperations();
+			opdb=DBOperations.getInstance();
 		   int checking = opdb.checkTicket(key);
 		   if(checking == 0)
 		   {
@@ -165,7 +166,7 @@ public class ApiJukebox {
 		   {
 			   System.out.println("El tiquet ha caducado");
 			   
-			   //Se enviara a la playList....
+			   
 			   return "El tiquet ha caducado";
 		   }
 		   if(checking == 3)

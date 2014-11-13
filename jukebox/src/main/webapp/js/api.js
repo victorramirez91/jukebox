@@ -1,4 +1,4 @@
-	var IP = "http://10.189.166.59:8080/jukebox"
+	var IP = "http://localhost:8080/jukebox"
 var API_BASE_URL = IP+"/rest/api/";
 
 
@@ -39,7 +39,14 @@ function check_key (idpet, key_input) {
 				success : function(data, status, jqxhr) {
 					
 					alert(data)
-				
+					$('#songs-data ').empty();
+					$('#key_input').hide();
+					$('#key_button').hide();
+					$('#back_button').show();
+					$('#key_label').hide();
+					$("#response").html(data);
+
+					
 				},
 				error : function(jqXHR, options, error) {
 					alert(jqXHR + error + options);
