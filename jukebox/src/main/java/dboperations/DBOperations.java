@@ -78,12 +78,12 @@ public class DBOperations {
 
 		if (ticket == null) {
 			System.out.println("No existe");
-			return 0;
+			return TICKET_ERR_NOT_FOUND;
 		}
 
 		if (ticket.getUsed() == true) {
 
-			return 3;
+			return TICKET_ERR_ALREADY_USED;
 		}
 
 		if (ticket.getUsed() == false)
@@ -114,10 +114,10 @@ public class DBOperations {
 				sesion2.getTransaction().commit();
 				System.out.println("Ticket saved correctly.");
 				sesion2.close();
-				return 1;
+				return TICKET_OK;
 			} else {
 				System.out.println("Ha pasado media hora");
-				return 2;
+				return TICKET_ERR_EXPIRED;
 			}
 
 		}

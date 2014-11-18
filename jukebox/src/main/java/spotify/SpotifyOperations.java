@@ -108,6 +108,7 @@ public class SpotifyOperations {
     	final TrackRequest request = api.getTrack(gtrack).build();
     	try {
     		  Track track = request.get();
+    		  
     		  System.out.println("La respuesta en operaciones es: "+track.getName());
     		 return track;
     	   

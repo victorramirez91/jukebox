@@ -1,4 +1,5 @@
 package api;
+
 import java.io.IOException;
 
 import java.io.UnsupportedEncodingException;
@@ -12,54 +13,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import objects.Ticket;
 import objects.TrackMaped;
 import jukebox.IndexSongs;
 import spotify.SpotifyOperations;
 import clases.TicketGen;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //import com.eetac.pycto.managers.ServerBallotBox;
 //import com.eetac.pycto.managers.ServerCACR;
@@ -70,206 +28,172 @@ import com.wrapper.spotify.models.Track;
 
 import dboperations.DBOperations;
 
-
 @Path("/api")
 public class ApiJukebox {
-	
+
 	List<Track> result_s = new ArrayList<Track>();
 	SpotifyOperations op = SpotifyOperations.getInstance();
-	 DBOperations opdb;
-	
-	
+	DBOperations opdb;
 
-		@GET
-		@Path("/prova/{param}")
-		public Response getMsg(@PathParam("param") String msg) {
-	 
-			String output = "Jersey say : " + msg;
-	 
-			return Response.status(200).entity(output).build();
-	   
-		}
-//		@GET
-//		@Path("/getticket")
-//		public Response getMsg2()   {
-//			System.out.println("getticket");
-//			Test test = new Test();
-//			String x=test.PlayerOn();
-//			return Response.status(200).entity("").build();
-//	   
-//		}
-		@GET
-		@Path("/getticket")
-		public String getTicket(@Context HttpServletRequest request ) {
-			
-			System.out.println("getticket");
-			Ticket tiq = new Ticket();
-			TicketGen gen = new TicketGen();
-			try {
-				tiq=gen.genticket();
-			} catch (UnsupportedEncodingException e) {
-				
-				e.printStackTrace();
-			}
-			Gson gson = new Gson();		
-			  String jsonserver =gson.toJson(tiq);
-			System.out.println(jsonserver);
-				return jsonserver;
+	@GET
+	@Path("/prova/{param}")
+	public Response getMsg(@PathParam("param") String msg) {
 
-	   
-	    	
-	    }	
-		
-		@GET
-		@Path("/getsongs")
-		public String getSongs(@Context HttpServletRequest request ) {
-			
-			System.out.println("getticket");
-			
-			IndexSongs index = new IndexSongs();
-			
-			//List<String> names = index.GetSongsName();
-			String a = index.getSongsJson();
-			return a;
-		
-	    	
-	    }	
-		
-		
-		@GET
-		@Path("/queque_song/{idsong}/{key}")
-		public String queque_song(
-				@PathParam("idsong") String idsong,
-				@PathParam("key") String key,
-				@Context HttpServletRequest request) throws IOException, WebApiException {
-			
-			opdb=DBOperations.getInstance();
-		   int checking = opdb.checkTicket(key);
-		   if(checking == 0)
-		   {
-			   System.out.println("Ticket incorrecto");
-			   
-			   //Se enviara a la playList....
-			   return "Incorrecto";
-		   }
-		   if(checking == 1)
-		   {
-			   System.out.println("EL ticket es correcto");
-			   Track respuestapet =op.getTrack(idsong);
-			   
-			   String respuesta =op.addSong(respuestapet.getUri());
-				System.out.println(respuesta);
-			   //Se enviara a la playList....
-			   return "El ticket es correcto:"+ respuesta;
-		   }
-		   if(checking == 2)
-		   {
-			   System.out.println("El tiquet ha caducado");
-			   
-			   
-			   return "El tiquet ha caducado";
-		   }
-		   if(checking == 3)
-		   {
-			   System.out.println("El tiquet ya se ha usado");
-			   
-			   //Se enviara a la playList....
-			   return "El tiquet ya se ha usado";
-		   }
-		   else 
-			   return "error";
-		    
-			
+		String output = "Jersey say : " + msg;
+
+		return Response.status(200).entity(output).build();
+
+	}
+
+	// @GET
+	// @Path("/getticket")
+	// public Response getMsg2() {
+	// System.out.println("getticket");
+	// Test test = new Test();
+	// String x=test.PlayerOn();
+	// return Response.status(200).entity("").build();
+	//
+	// }
+	@GET
+	@Path("/getticket")
+	public String getTicket(@Context HttpServletRequest request) {
+
+		System.out.println("getticket");
+		Ticket tiq = new Ticket();
+		TicketGen gen = new TicketGen();
+		try {
+			tiq = gen.genticket();
+		} catch (UnsupportedEncodingException e) {
+
+			e.printStackTrace();
 		}
-		
-		@GET
-		@Path("/search_song/{search_s}")
-		public String search_song(
-				@PathParam("search_s") String search_s,
-				
-				@Context HttpServletRequest request)  {
-			System.out.println("1");
-			System.out.println("VAMOS A BUSCAR: "+search_s);
-			try {
-				
+		Gson gson = new Gson();
+		String jsonserver = gson.toJson(tiq);
+		System.out.println(jsonserver);
+		return jsonserver;
+
+	}
+
+	@GET
+	@Path("/getsongs")
+	public String getSongs(@Context HttpServletRequest request) {
+
+		System.out.println("getticket");
+
+		IndexSongs index = new IndexSongs();
+
+		// List<String> names = index.GetSongsName();
+		String a = index.getSongsJson();
+		return a;
+
+	}
+
+	@GET
+	@Path("/queque_song/{idsong}/{key}")
+	public String queque_song(@PathParam("idsong") String idsong,
+			@PathParam("key") String key, @Context HttpServletRequest request)
+			throws IOException, WebApiException {
+
+		opdb = DBOperations.getInstance();
+		int checking = opdb.checkTicket(key);
+		if (checking == DBOperations.TICKET_ERR_NOT_FOUND) {
+			System.out.println("Ticket incorrecto");
+			return "Incorrecto";
+		}
+		if (checking == DBOperations.TICKET_OK) {
+			System.out.println("EL ticket es correcto");
+			Track respuestapet = op.getTrack(idsong);
+			String respuesta = op.addSong(respuestapet.getUri());
+			System.out.println(respuesta);
+			// Se enviara a la playList....
+			return "El ticket es correcto:" + respuesta;
+		}
+		if (checking == DBOperations.TICKET_ERR_EXPIRED) {
+			System.out.println("El tiquet ha caducado");
+
+			return "El tiquet ha caducado";
+		}
+		if (checking == DBOperations.TICKET_ERR_ALREADY_USED) {
+			System.out.println("El tiquet ya se ha usado");
+
+			return "El tiquet ya se ha usado";
+		} else
+			return "error";
+
+	}
+
+	@GET
+	@Path("/search_song/{search_s}")
+	public String search_song(@PathParam("search_s") String search_s,
+
+	@Context HttpServletRequest request) {
+		System.out.println("1");
+		System.out.println("VAMOS A BUSCAR: " + search_s);
+		try {
+
 			System.out.println("2");
-//			SpotifyOperations op = SpotifyOperations.getInstance();
+			// SpotifyOperations op = SpotifyOperations.getInstance();
 			System.out.println("4");
-			result_s= op.searchTrack(search_s);
-			
+			result_s = op.searchTrack(search_s);
+
 			int i = 0;
-			System.out.println("HOLAAAAAA:   "+result_s.get(1).getArtists().get(0).getName());
-			List <TrackMaped> traks = new ArrayList<TrackMaped>();
-			while (i < result_s.size())
-			{
+			System.out.println("HOLAAAAAA:   "
+					+ result_s.get(1).getArtists().get(0).getName());
+			List<TrackMaped> traks = new ArrayList<TrackMaped>();
+			while (i < result_s.size()) {
 				result_s.get(i).getAlbum().getImages().get(0);
-				TrackMaped map = new TrackMaped(result_s.get(i).getArtists().get(0).getName(), result_s.get(i).getName(), Integer.toString(result_s.get(i).getDuration()), result_s.get(i).getId(), result_s.get(i).getAlbum().getImages().get(0).getUrl());
+				TrackMaped map = new TrackMaped(result_s.get(i).getArtists()
+						.get(0).getName(), result_s.get(i).getName(),
+						Integer.toString(result_s.get(i).getDuration()),
+						result_s.get(i).getId(), result_s.get(i).getAlbum()
+								.getImages().get(0).getUrl());
 				traks.add(map);
 				i++;
 			}
-			
-			
-			
-			Gson gson = new Gson();		
-			  String json_result_s =gson.toJson(traks);
+
+			Gson gson = new Gson();
+			String json_result_s = gson.toJson(traks);
 			System.out.println(json_result_s);
 			return json_result_s;
-			
-		    	   
-		    	   
-		    	} catch (Exception e) {
-		    	   System.out.println("Something went wrong!");
-		    	   return "error";
-		    	}
-			
-			
-			
-			
+
+		} catch (Exception e) {
+			System.out.println("Something went wrong!");
+			return "error";
 		}
-		
-		
-		
-		
-		
-		@GET
-		@Path("/insertSpoti_song/{song}")
-		public String insertSpoti_song(
-				@PathParam("song") String song,
-				
-				@Context HttpServletRequest request) throws IOException, WebApiException  {
-				
-			System.out.println("se quiere añadir: "+ song);
-			String respuesta =op.addSong(song);
-				System.out.println(respuesta);
-			
-			
-			return null;
-		}
-		
-		@GET
-		@Path("/getSpoti_song/{gtrack}")
-		public String getSpoti_song(
-				@PathParam("gtrack") String gtrack,
-				
-				@Context HttpServletRequest request) throws IOException, WebApiException  {
-				Track respuesta =op.getTrack(gtrack);
-				
-				System.out.println("EN API: "+respuesta.getName());
-				TrackMaped map2 = new TrackMaped(respuesta.getArtists().get(0).getName(), respuesta.getName(), Integer.toString(respuesta.getDuration()), respuesta.getId(), respuesta.getAlbum().getImages().get(0).getUrl());
-			
-				Gson gson2 = new Gson();		
-				String json_result_s2 =gson2.toJson(map2);
-				System.out.println(json_result_s2);
-				return json_result_s2;
-				
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
+
+	}
+
+	@GET
+	@Path("/insertSpoti_song/{song}")
+	public String insertSpoti_song(@PathParam("song") String song,
+
+	@Context HttpServletRequest request) throws IOException, WebApiException {
+
+		System.out.println("se quiere añadir: " + song);
+		String respuesta = op.addSong(song);
+		System.out.println(respuesta);
+
+		return null;
+	}
+
+	@GET
+	@Path("/getSpoti_song/{gtrack}")
+	public String getSpoti_song(@PathParam("gtrack") String gtrack,
+
+	@Context HttpServletRequest request) throws IOException, WebApiException {
+		Track respuesta = op.getTrack(gtrack);
+
+		System.out.println("EN API: " + respuesta.getName());
+		TrackMaped map2 = new TrackMaped(respuesta.getArtists().get(0)
+				.getName(), respuesta.getName(), Integer.toString(respuesta
+				.getDuration()), respuesta.getId(), respuesta.getAlbum()
+				.getImages().get(0).getUrl());
+
+		Gson gson2 = new Gson();
+		String json_result_s2 = gson2.toJson(map2);
+		System.out.println(json_result_s2);
+		return json_result_s2;
+
+	}
+
 }

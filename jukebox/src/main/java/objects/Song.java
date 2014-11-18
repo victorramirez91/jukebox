@@ -5,10 +5,24 @@ public class Song {
 	String Artist;
 	String Name;
 	String genre;
+	String duration;
 	String image;
 	String album;
+	String id;
 	
 	
+	public String getDuration() {
+		return duration;
+	}
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public Song() {
 		super();
 	}

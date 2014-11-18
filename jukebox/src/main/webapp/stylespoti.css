@@ -1,0 +1,44 @@
+body{
+	font-family:  sans-serif; 
+}
+h1{
+	font-family:  Helvetica; 
+}
+.buttonsy{
+	padding: 18px;
+	background-color: rgb(154, 207, 208);
+	height: auto;
+	
+	width : auto;
+}
+.contenedorCancion{
+		padding: 18px;
+	background-color: rgb(154, 207, 208);
+	height: auto;
+
+
+	}
+	.cancion{
+		padding: 15px;
+		border: 1px solid red;
+		margin-top: 15px;
+	}
+	.contenedorImagen{
+		width: 30%;
+		
+		float: left;
+	}
+	.imagenCancion{
+		 display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+	}
+	.clear{
+		clear: both;		
+	}
+	.contenedorTexto {
+width: auto;
+margin-left: auto;
+	margin-right: auto;
+	width: 6em;}
