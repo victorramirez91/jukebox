@@ -1,7 +1,6 @@
 package api;
 
 import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +12,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import objects.Song;
 import objects.Ticket;
 import objects.TrackMaped;
 import jukebox.IndexSongs;
+import jukebox.JukeboxLocalImp;
+import jukebox.JukeboxSpotifyImpl;
 import spotify.SpotifyOperations;
 import clases.TicketGen;
 
-//import com.eetac.pycto.managers.ServerBallotBox;
-//import com.eetac.pycto.managers.ServerCACR;
-//import com.eetac.pycto.models.CA_CR;
 import com.google.gson.Gson;
 import com.wrapper.spotify.exceptions.WebApiException;
 import com.wrapper.spotify.models.Track;
@@ -34,6 +33,10 @@ public class ApiJukebox {
 	List<Track> result_s = new ArrayList<Track>();
 	SpotifyOperations op = SpotifyOperations.getInstance();
 	DBOperations opdb;
+	
+	//Se debe indicar cuál es la implementacion!
+	//JukeboxSpotifyImpl jukebox = new JukeboxSpotifyImpl();
+	JukeboxLocalImp jukebox = JukeboxLocalImp.getInstance();
 
 	@GET
 	@Path("/prova/{param}")
@@ -45,20 +48,12 @@ public class ApiJukebox {
 
 	}
 
-	// @GET
-	// @Path("/getticket")
-	// public Response getMsg2() {
-	// System.out.println("getticket");
-	// Test test = new Test();
-	// String x=test.PlayerOn();
-	// return Response.status(200).entity("").build();
-	//
-	// }
+
 	@GET
 	@Path("/getticket")
 	public String getTicket(@Context HttpServletRequest request) {
 
-		System.out.println("getticket");
+		
 		Ticket tiq = new Ticket();
 		TicketGen gen = new TicketGen();
 		try {
@@ -80,11 +75,42 @@ public class ApiJukebox {
 
 		System.out.println("getticket");
 
-		IndexSongs index = new IndexSongs();
+		ArrayList<Song> availablesgs= jukebox.getSongs();
 
 		// List<String> names = index.GetSongsName();
-		String a = index.getSongsJson();
-		return a;
+		Gson Gs = new Gson();
+		String json_available = Gs.toJson(availablesgs);
+		System.out.println(json_available);
+		return json_available;
+		
+
+	}
+	
+	
+	@GET
+	@Path("/getplaylist")
+	public String getPlaylist(@Context HttpServletRequest request) {
+
+		
+		try {
+			
+			ArrayList<Song> playlistsgs= jukebox.getPlaylist();
+			
+			// List<String> names = index.GetSongsName();
+			if(playlistsgs != null){
+			Gson Gs = new Gson();
+			String json_available = Gs.toJson(playlistsgs);
+			System.out.println(json_available);
+			return json_available;}
+			
+		} catch (Exception e) {
+			return "Lista de reproduccion vacia...";
+		}
+		return null;
+		
+		
+			
+		
 
 	}
 
@@ -102,11 +128,10 @@ public class ApiJukebox {
 		}
 		if (checking == DBOperations.TICKET_OK) {
 			System.out.println("EL ticket es correcto");
-			Track respuestapet = op.getTrack(idsong);
-			String respuesta = op.addSong(respuestapet.getUri());
-			System.out.println(respuesta);
+			int response = jukebox.addToPlaylist(idsong);
+			System.out.println(response);
 			// Se enviara a la playList....
-			return "El ticket es correcto:" + respuesta;
+			return "El ticket es correcto:" + response;
 		}
 		if (checking == DBOperations.TICKET_ERR_EXPIRED) {
 			System.out.println("El tiquet ha caducado");
@@ -170,8 +195,8 @@ public class ApiJukebox {
 	@Context HttpServletRequest request) throws IOException, WebApiException {
 
 		System.out.println("se quiere añadir: " + song);
-		String respuesta = op.addSong(song);
-		System.out.println(respuesta);
+		//String respuesta = op.addSong(song);
+		//System.out.println(respuesta);
 
 		return null;
 	}
@@ -191,6 +216,24 @@ public class ApiJukebox {
 
 		Gson gson2 = new Gson();
 		String json_result_s2 = gson2.toJson(map2);
+		System.out.println(json_result_s2);
+		return json_result_s2;
+
+	}
+	
+	
+	@GET
+	@Path("/get_song/{gtrack}")
+	public String get_Song(@PathParam("gtrack") String gtrack,
+
+	@Context HttpServletRequest request) throws IOException, WebApiException {
+		
+		System.out.println("EN API, QUEREMOS OBTENER CANCION CON ID:"+gtrack);
+		Song songresponse = jukebox.getSong(gtrack);
+		System.out.println("EN API OBTENEMOS :"+songresponse.getName());
+
+		Gson gson2 = new Gson();
+		String json_result_s2 = gson2.toJson(songresponse);
 		System.out.println(json_result_s2);
 		return json_result_s2;
 

@@ -17,5 +17,5 @@ public interface Jukebox {
 	
 	public Song getSong(String id);
 	
-	public int addToPlaylist(String songId, String code);
+	public int addToPlaylist(String songId);
 }

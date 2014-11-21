@@ -25,14 +25,25 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import objects.Song;
 import objects.Songs;
 import objects.TrackMaped;
+import player.PlayerController;
 
 public class IndexSongs {
 	public static String sDirectorio = "C:/Users/Victorz/jukeboxsongs/AllSongs/";
-
+	static IndexSongs instance;
 	public String getcurrentfolfer() {
 		return sDirectorio;
 	}
+	public static IndexSongs getInstance() {
+		if (instance == null) {
+			instance = new IndexSongs();
+		}
 
+		return instance;
+	}
+	private IndexSongs() {
+		System.out.println("INITIALIZE INDEXXXXXXX");
+		// TODO Auto-generated constructor stub
+	}
 	ArrayList<Song> listsong = new ArrayList<Song>();
 	ArrayList<TrackMaped> listtracks = new ArrayList<TrackMaped>();
 
@@ -81,6 +92,7 @@ public class IndexSongs {
 				sg.setAlbum(id3v2Tag.getAlbum());
 				sg.setArtist(id3v2Tag.getArtist());
 				sg.setName(id3v2Tag.getTitle());
+				sg.setId(songs.get(i));
 				if(id3v2Tag.getGenre()==-1)
 				{
 					sg.setGenre("no info");

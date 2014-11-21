@@ -92,16 +92,16 @@ public class TestEtiquetasMp3 {
 	public static void main(String[] args) throws UnsupportedTagException, InvalidDataException, IOException {
 
 		
-		IndexSongs is = new IndexSongs();
-		List<Song> aa=is.getSongsObject();
-		int i=0;
-		System.out.println("--------------------------------");
-		while(i< aa.size())
-		{
-			
-			System.out.println(aa.get(i).getName());
-			i++;
-		}
+//		IndexSongs is = new IndexSongs();
+//		List<Song> aa=is.getSongsObject();
+//		int i=0;
+//		System.out.println("--------------------------------");
+//		while(i< aa.size())
+//		{
+//			
+//			System.out.println(aa.get(i).getName());
+//			i++;
+//		}
 		
 		
 		

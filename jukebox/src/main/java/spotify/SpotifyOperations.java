@@ -16,7 +16,8 @@ import com.wrapper.spotify.models.Track;
 
 public class SpotifyOperations {
 	
-	
+	public static int SONG_ADDED_CORRECT =0;
+	public static int ERR_SONG_NOT_ADDED =-1;
 	private static SpotifyOperations instance= null;
 	private SpotifyOperations(){
 	}
@@ -42,7 +43,7 @@ public class SpotifyOperations {
 			  .refreshToken(refreshToken)
 			  .build();
     
-    public String addSong(String track) throws IOException, WebApiException
+    public int addSong(String track) throws IOException, WebApiException
     {
     	
     	 final RefreshAccessTokenRequest request = api
@@ -71,10 +72,10 @@ public class SpotifyOperations {
  	try {	
  		
  	  request2.get(); // Empty response
- 	 return track+"  Añadida";
+ 	 return SONG_ADDED_CORRECT;
  	} catch (Exception e) {
  	   System.out.println("Something went wrong!" + e.getMessage());
- 	   return "No se ha podido añadir";
+ 	   return ERR_SONG_NOT_ADDED;
  	}
  	
     	
