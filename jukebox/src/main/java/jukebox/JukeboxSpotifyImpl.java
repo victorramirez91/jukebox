@@ -52,6 +52,7 @@ public class JukeboxSpotifyImpl implements Jukebox {
 
 	public int addToPlaylist(String songId) {
 		int state =INITIAL_VALUE;
+		System.out.println("Queremos añadir:" +songId);
 		Track respuestapet = so.getTrack(songId);
 		try {
 			state = so.addSong(respuestapet.getUri());

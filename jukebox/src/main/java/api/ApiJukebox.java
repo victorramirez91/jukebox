@@ -73,7 +73,7 @@ public class ApiJukebox {
 	@Path("/getsongs")
 	public String getSongs(@Context HttpServletRequest request) {
 
-		System.out.println("getticket");
+		System.out.println("vamos a pedir las canciones disponibles");
 
 		ArrayList<Song> availablesgs= jukebox.getSongs();
 
@@ -154,37 +154,42 @@ public class ApiJukebox {
 	@Context HttpServletRequest request) {
 		System.out.println("1");
 		System.out.println("VAMOS A BUSCAR: " + search_s);
-		try {
-
-			System.out.println("2");
-			// SpotifyOperations op = SpotifyOperations.getInstance();
-			System.out.println("4");
-			result_s = op.searchTrack(search_s);
-
-			int i = 0;
-			System.out.println("HOLAAAAAA:   "
-					+ result_s.get(1).getArtists().get(0).getName());
-			List<TrackMaped> traks = new ArrayList<TrackMaped>();
-			while (i < result_s.size()) {
-				result_s.get(i).getAlbum().getImages().get(0);
-				TrackMaped map = new TrackMaped(result_s.get(i).getArtists()
-						.get(0).getName(), result_s.get(i).getName(),
-						Integer.toString(result_s.get(i).getDuration()),
-						result_s.get(i).getId(), result_s.get(i).getAlbum()
-								.getImages().get(0).getUrl());
-				traks.add(map);
-				i++;
-			}
-
-			Gson gson = new Gson();
-			String json_result_s = gson.toJson(traks);
-			System.out.println(json_result_s);
-			return json_result_s;
-
-		} catch (Exception e) {
-			System.out.println("Something went wrong!");
-			return "error";
+		ArrayList<Song> tracks = new ArrayList<Song>();
+		tracks = jukebox.search(search_s);
+		if (tracks == null)
+		{
+			return "Lo Sentimos, no hay coincidencias.";
 		}
+		Gson gson = new Gson();
+		String json_result_s = gson.toJson(tracks);
+		System.out.println(json_result_s);
+		return json_result_s;
+
+//			System.out.println("2");
+//			// SpotifyOperations op = SpotifyOperations.getInstance();
+//			System.out.println("4");
+//			result_s = op.searchTrack(search_s);
+//
+//			int i = 0;
+//			System.out.println("HOLAAAAAA:   "
+//					+ result_s.get(1).getArtists().get(0).getName());
+//			List<TrackMaped> traks = new ArrayList<TrackMaped>();
+//			while (i < result_s.size()) {
+//				result_s.get(i).getAlbum().getImages().get(0);
+//				TrackMaped map = new TrackMaped(result_s.get(i).getArtists()
+//						.get(0).getName(), result_s.get(i).getName(),
+//						Integer.toString(result_s.get(i).getDuration()),
+//						result_s.get(i).getId(), result_s.get(i).getAlbum()
+//								.getImages().get(0).getUrl());
+//				traks.add(map);
+//				i++;
+//			}
+			
+
+		
+			
+			
+		
 
 	}
 

@@ -68,6 +68,7 @@ function check_key (idpet, key_input) {
 
 function getSpotiSongs(track) {
 	
+	//var url = API_BASE_URL + 'search_song/'+track;
 	var url = API_BASE_URL + 'search_song/'+track;
 
 	$.ajax({
@@ -81,8 +82,8 @@ function getSpotiSongs(track) {
 			$('#prova2').show();
 			 $.each(response, function (index, value) {
  		
- 	 	$('#songs-data').append("<a href='Insertkey.html?id="+value.id+"'' ><div class='cancion' id = '"+value.id+"' > <div class='contenedorImagen'>"+
-    				"<img src='"+ value.image +" ' class='imagenCancion' alt=''>"+
+ 	 	$('#songs-data').append("<a href='Insertkey.html?id="+value.id+"' ><div class='cancion' id = '"+value.id+"' > <div class='contenedorImagen'>"+
+    				"<img src="+IP	+"/images/"+ value.image +" class='imagenCancion' alt=''>"+
     			"</div>"+
     			"<div class='contenedorTexto'>"+
 					"<div class='contenedorCancion'>"+ value.Name + "</div>"+
@@ -104,7 +105,7 @@ function getSpotiSongs(track) {
 
 function getSpotiSong(track) {
 	
-	var url = API_BASE_URL + 'getSpoti_song/'+track;
+	var url = API_BASE_URL + 'get_song/'+track;
 	
 
 	$.ajax({
@@ -119,8 +120,8 @@ function getSpotiSong(track) {
 			
 			 
  		
- 	 	$('#songs-data').append("<a href='#' ><div class='cancion' id = '"+data.id+"' > <div class='contenedorImagen'>"+
-    				"<img src='"+ data.image +" ' class='imagenCancion' alt=''>"+
+ 	 	$('#songs-data').append("<a href='#' ><div class='cancion' id = "+data.id+" > <div class='contenedorImagen'>"+
+    				"<img src="+IP	+"/images/"+ data.image +" ' class='imagenCancion' alt=''>"+
     			"</div>"+
     			"<div class='contenedorTexto'>"+
 					"<div class='contenedorCancion'>"+ data.Name + "</div>"+

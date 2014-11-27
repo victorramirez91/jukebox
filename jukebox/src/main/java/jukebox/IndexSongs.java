@@ -92,7 +92,8 @@ public class IndexSongs {
 				sg.setAlbum(id3v2Tag.getAlbum());
 				sg.setArtist(id3v2Tag.getArtist());
 				sg.setName(id3v2Tag.getTitle());
-				sg.setId(songs.get(i));
+				String idx = songs.get(i).replace("'", "_");
+				sg.setId(idx);
 				if(id3v2Tag.getGenre()==-1)
 				{
 					sg.setGenre("no info");
@@ -104,8 +105,10 @@ public class IndexSongs {
 				
 				byte[] albumImageData = id3v2Tag.getAlbumImage();
 				if (albumImageData != null) {
-					sg.setImage(id3v2Tag.getTitle()+".jpg");
-					getimage(albumImageData, id3v2Tag.getTitle());
+					String im =id3v2Tag.getTitle().replace(" ", "");
+					System.out.println("nuevo nombre de imagen....................:"+im);
+					sg.setImage(im+".jpg");
+					getimage(albumImageData, im);
 					System.out.println("Have album image data, length: "
 							+ albumImageData.length + " bytes");
 					System.out.println("Album image mime type: "
@@ -146,7 +149,7 @@ public class IndexSongs {
 		Graphics2D g2 = bufferedImage.createGraphics();
 		g2.drawImage(image, null, null);
 
-		File imageFile = new File("C:/Users/Victorz/jukeboxsongs/" +"AllSongsImages/"+ name + ".jpg");
+		File imageFile = new File("C:/Users/Victorz/git/tfg/jukebox/src/main/webapp/images/"+ name + ".jpg");
 		ImageIO.write(bufferedImage, "jpg", imageFile);
 
 		System.out.println(imageFile.getPath());

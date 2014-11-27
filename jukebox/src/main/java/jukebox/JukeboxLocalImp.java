@@ -16,6 +16,7 @@ public class JukeboxLocalImp implements Jukebox {
 	 
 	static JukeboxLocalImp instance;
 	PlayerController playerc;
+	IndexSongs is;
 	public static JukeboxLocalImp getInstance(){
 		if( instance == null ) {
 			instance = new JukeboxLocalImp();
@@ -26,10 +27,11 @@ public class JukeboxLocalImp implements Jukebox {
   private JukeboxLocalImp()
      {
 	   playerc = PlayerController.getInstance();
+	   is = IndexSongs.getInstance();
       
      }
 	public ArrayList<Song> getSongs() {
-		IndexSongs is = IndexSongs.getInstance();
+		 
 		try {
 			
 			if (availableSongs==null){
@@ -82,23 +84,45 @@ public class JukeboxLocalImp implements Jukebox {
 
 	public ArrayList<Song> search(String term) {
 		ArrayList<Song> songssrch = new ArrayList<Song>();
-
-		for (int x2 = 1; x2 < availableSongs.size(); x2++) {
-			String cadena = availableSongs.get(x2).getName();
+		
+		if(availableSongs==null){
+		try {
+			availableSongs = is.getSongsObject();
+		} catch (UnsupportedTagException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+		System.out.println("VAMOS A BUSCAR EN LOCAL"+term);
+		int in=0;
+		while (in<availableSongs.size())
+		{
+			String cadena = availableSongs.get(in).getName();
+			System.out.println("CADENA:     "+cadena);
 			int resultado = cadena.indexOf(term);
+			System.out.println("COINCIDENCIAS:     "+resultado);
 			if (resultado != -1) {
 				
-				songssrch.add(availableSongs.get(x2));
+				songssrch.add(availableSongs.get(in));
 			}
+			in++;
 		}
+			
 		return songssrch;
 
 		
 	}
 
 	public int addToPlaylist(String songId) {
-
-		String newsg = songId ;
+		System.out.println("Queremos añadir "+songId+"a la lista de reproduccion");
+		String newsg = songId.replace("_", "'") ;
+		System.out.println("Despues de substituir tenemos "+newsg+"...");
 		playerc.addSongToPlayList(newsg);
 
 		return 0;
@@ -107,13 +131,15 @@ public class JukeboxLocalImp implements Jukebox {
 	public Song getSong(String id) {
 
 		String name = id;
-
-		for (int x = 1; x < availableSongs.size(); x++) {
+		System.out.println("EN IMPLEMENTACION QUEREMOS   "+id);
+		
+			int x=0;
+			while (x< availableSongs.size()){
 			if (availableSongs.get(x).getId().equals(name)) {
 				System.out.println("ha encontrado la cancion");
 				return availableSongs.get(x);
 			}
-
+			x++;
 		}
 		return null;
 	}
