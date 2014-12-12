@@ -5,19 +5,49 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width"/>
-<link rel="stylesheet" type="text/css" href="Insertkey.css">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="stylespoti.css">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+	
+
+<style type="text/css">
+    input {
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        border: 1px solid #000000;
+        padding: 0 4px 0 4px;
+     }
+</style>
+
+<title>Jukebox</title>
 </head>
 <body>
+<header>
+				<div class="titular">
+					<h1 class="titulo">Jukebox</h1>
+				</div>
+				<div class="buscador"><i class="fa fa-search"></i></div>
+			</header>
 
-<h1 id="response"></h1>
-<div class="contenedorCancion" id="songs-data"></div>
+
+<div class="contenedorBotones">
+				<div class="btnRecomendados">Recomendado</div>
+				<div class="btnRecomendados">Lista</div>
+			</div>
+
+
+
+<label id="response"></label>
+
 <div class='buttonsx'>
 	<label id="key_label">Introduce el codigo que te han subministrado:</label>
 <input  type="text" id="key_input">
 <button type="button" class="btn btn-default" id="key_button">Aceptar</button>
 <button type="button" class="btn btn-default" id="back_button">Volver</button>
 </div>
+<div class="contenedorCanciones" id="songs-data">
 <script type="text/javascript">
 
 

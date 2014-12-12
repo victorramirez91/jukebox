@@ -43,6 +43,7 @@ public class JukeboxSpotifyImpl implements Jukebox {
 				s.setGenre("no info");
 				s.setId(tracktemp.getId());
 				s.setName(tracktemp.getName());
+				s.setImage(tracktemp.getAlbum().getImages().get(0).getUrl());
 				responseSongs.add(s);
 				i++;
 			}

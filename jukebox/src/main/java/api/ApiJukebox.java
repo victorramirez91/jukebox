@@ -76,7 +76,7 @@ public class ApiJukebox {
 		System.out.println("vamos a pedir las canciones disponibles");
 
 		ArrayList<Song> availablesgs= jukebox.getSongs();
-
+		System.out.println(request.getRemoteAddr());
 		// List<String> names = index.GetSongsName();
 		Gson Gs = new Gson();
 		String json_available = Gs.toJson(availablesgs);
@@ -119,7 +119,7 @@ public class ApiJukebox {
 	public String queque_song(@PathParam("idsong") String idsong,
 			@PathParam("key") String key, @Context HttpServletRequest request)
 			throws IOException, WebApiException {
-
+		System.out.println("LA IP QUE ESTA INTRODUCIENDO LA CLAVE ES:  "+request.getLocalAddr());
 		opdb = DBOperations.getInstance();
 		int checking = opdb.checkTicket(key);
 		if (checking == DBOperations.TICKET_ERR_NOT_FOUND) {

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.management.Query;
 
+import objects.ClientIP;
 import objects.Ticket;
 
 import org.hibernate.SessionFactory;
@@ -124,5 +125,52 @@ public class DBOperations {
 		return 0;
 
 	}
+	
+	
+	
+	
+	
+	public int checkIp(String ip) {
+		
+
+		Session sesion = factory.openSession();
+		System.out.println("check ip");
+
+		SQLQuery query = sesion
+				.createSQLQuery("SELECT * FROM clientip WHERE ip = :key");
+
+		query.addEntity(ClientIP.class);
+		query.setString("ip", ip);
+		sesion.beginTransaction();
+		ClientIP cip = (ClientIP) query.uniqueResult();
+		System.out.println(cip.getIp());
+		sesion.getTransaction().commit();
+		sesion.close();
+		return 0;
+
+	}
+public int addtryClient(String ip) {
+		
+
+		Session sesion = factory.openSession();
+		System.out.println("check ip");
+
+		SQLQuery query = sesion
+				.createSQLQuery("SELECT * FROM clientip WHERE ip = :key");
+
+		query.addEntity(ClientIP.class);
+		query.setString("ip", ip);
+		sesion.beginTransaction();
+		ClientIP cip = (ClientIP) query.uniqueResult();
+		System.out.println(cip.getIp());
+		sesion.getTransaction().commit();
+		sesion.close();
+		return 0;
+
+	}
+	
+	
+	
+	
 
 }

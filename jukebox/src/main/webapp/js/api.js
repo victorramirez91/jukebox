@@ -1,7 +1,5 @@
-	var IP = "http://localhost:8080/jukebox"
+	var IP = "http://10.189.100.180:8080/jukebox"
 var API_BASE_URL = IP+"/rest/api/";
-
-
 function getticket() {
 	
 	var url = API_BASE_URL + 'getticket';
@@ -82,19 +80,69 @@ function getSpotiSongs(track) {
 			$('#prova2').show();
 			 $.each(response, function (index, value) {
  		
- 	 	$('#songs-data').append("<a href='Insertkey.html?id="+value.id+"' ><div class='cancion' id = '"+value.id+"' > <div class='contenedorImagen'>"+
-    				"<img src="+IP	+"/images/"+ value.image +" class='imagenCancion' alt=''>"+
+ 	 		$('#songs-data').append("<a href='Insertkey.html?id="+value.id+"' ><div class='cancion' id = "+value.id+" > <div class='imagen'>"+
+    				"<img src="+ value.image +" ' class='img-responsive' alt=''>"+
     			"</div>"+
-    			"<div class='contenedorTexto'>"+
-					"<div class='contenedorCancion'>"+ value.Name + "</div>"+
-					"<div class='contenedorAlbum'>"  + value.Artist +"</div>"+
-					"<div class='contenedortiempo'>"+ value.duration +"</div>"+
+    			"<div class='textoCancion'>"+
+					"<div class='nameAutor'>"+
+					"<span class='nameSong'>"+ value.Name + "</span>"+
+					"<span class='separacion'>-</span>"+
+					"<span class='autor'>"+value.Artist+"</span>"+
+
+					"</div>"+
+
+
+					"<div class='album'>"  + value.Artist +"</div>"+
+					"<div class='duracion'>"+ value.duration +"</div>"+
 
 				"</div>"+
 				"<div class='clear'></div>"+
     		"</div></a>");
  	 
-			 });
+			   });
+			 },
+				error : function(jqXHR, options, error) {
+					alert(jqXHR + error + options);
+				}
+			});
+}
+
+function getavailablesongs() {
+	
+	//var url = API_BASE_URL + 'search_song/'+track;
+	var url = API_BASE_URL + 'getsongs/';
+
+	$.ajax({
+		url : url,
+		type : 'GET',
+		
+		crossDomain : true,
+		dataType : 'json',
+		success : function(data, status, jqxhr) {
+			var response = data;
+			$('#prova2').show();
+			 $.each(response, function (index, value) {
+ 		
+ 	 		$('#songs-data').append("<a href='Insertkey.html?id="+value.id+"' ><div class='cancion' id = "+value.id+" > <div class='imagen'>"+
+    				"<img src="+IP	+"/images/"+ value.image +" ' class='img-responsive' alt=''>"+
+    			"</div>"+
+    			"<div class='textoCancion'>"+
+					"<div class='nameAutor'>"+
+					"<span class='nameSong'>"+ value.Name + "</span>"+
+					"<span class='separacion'>-</span>"+
+					"<span class='autor'>"+value.Artist+"</span>"+
+
+					"</div>"+
+
+
+					"<div class='album'>"  + value.Artist +"</div>"+
+					"<div class='duracion'>"+ value.duration +"</div>"+
+
+				"</div>"+
+				"<div class='clear'></div>"+
+    		"</div></a>");
+ 	 
+			   });
 			 },
 				error : function(jqXHR, options, error) {
 					alert(jqXHR + error + options);
@@ -115,18 +163,25 @@ function getSpotiSong(track) {
 		crossDomain : true,
 		dataType : 'json',
 		success : function(data, status, jqxhr) {
-			var response = data;
+			
 			
 			
 			 
  		
- 	 	$('#songs-data').append("<a href='#' ><div class='cancion' id = "+data.id+" > <div class='contenedorImagen'>"+
-    				"<img src="+IP	+"/images/"+ data.image +" ' class='imagenCancion' alt=''>"+
+ 	 	$('#songs-data').append("<a href='#' ><div class='cancion' id = "+data.id+" > <div class='imagen'>"+
+    				"<img src="+IP	+"/images/"+ data.image +" ' class='img-responsive' alt=''>"+
     			"</div>"+
-    			"<div class='contenedorTexto'>"+
-					"<div class='contenedorCancion'>"+ data.Name + "</div>"+
-					"<div class='contenedorAlbum'>"  + data.Artist +"</div>"+
-					"<div class='contenedortiempo'>"+ data.duration +"</div>"+
+    			"<div class='textoCancion'>"+
+					"<div class='nameAutor'>"+
+					"<span class='nameSong'>"+ data.Name + "</span>"+
+					"<span class='separacion'>-</span>"+
+					"<span class='autor'>"+data.Artist+"</span>"+
+
+					"</div>"+
+
+
+					"<div class='album'>"  + data.Artist +"</div>"+
+					"<div class='duracion'>"+ data.duration +"</div>"+
 
 				"</div>"+
 				"<div class='clear'></div>"+
