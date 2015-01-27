@@ -7,13 +7,22 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+
+
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+
+import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
 import com.google.gson.Gson;
 import com.mpatric.mp3agic.ID3v1;
@@ -22,6 +31,7 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
+import dboperations.DBOperations;
 import objects.Song;
 import objects.Songs;
 import objects.TrackMaped;
@@ -30,6 +40,7 @@ import player.PlayerController;
 public class IndexSongs {
 	public static String sDirectorio = "C:/Users/Victorz/jukeboxsongs/AllSongs/";
 	static IndexSongs instance;
+	DBOperations dbo =DBOperations.getInstance();
 	public String getcurrentfolfer() {
 		return sDirectorio;
 	}
@@ -49,8 +60,13 @@ public class IndexSongs {
 
 	// Metodo para buscar las canciones que hay en un determinado directorio
 	public List<String> GetSongsName() {
+		List<String> songslist = new ArrayList<String>();
+		
+		
+		
 
 		File f = new File(sDirectorio);
+
 
 		if (f.exists()) {
 			System.out.println("Directorio existe");
@@ -62,7 +78,7 @@ public class IndexSongs {
 		File[] ficheros = f.listFiles();
 
 		int i = 0;
-		List<String> songslist = new ArrayList<String>();
+		 songslist = new ArrayList<String>();
 		while (i < ficheros.length) {
 			if ((ficheros[i].toString().toLowerCase().endsWith(".mp3"))) {
 
@@ -82,47 +98,99 @@ public class IndexSongs {
 	}
 
 	public ArrayList<Song> getSongsObject() throws UnsupportedTagException, InvalidDataException, IOException {
-		List<String> songs = GetSongsName();
-		int i = 0;
-		while (i < songs.size()) {
-			Mp3File mp3file = new Mp3File(sDirectorio + songs.get(i));
-			if (mp3file.hasId3v2Tag()) {
-				ID3v2 id3v2Tag = mp3file.getId3v2Tag();
-				Song sg = new Song();
-				sg.setAlbum(id3v2Tag.getAlbum());
-				sg.setArtist(id3v2Tag.getArtist());
-				sg.setName(id3v2Tag.getTitle());
-				String idx = songs.get(i).replace("'", "_");
-				sg.setId(idx);
-				if(id3v2Tag.getGenre()==-1)
-				{
-					sg.setGenre("no info");
-				}
-				if(id3v2Tag.getGenre()!=-1)
-				{
-					sg.setGenre(id3v2Tag.getGenreDescription());
-				}
-				
-				byte[] albumImageData = id3v2Tag.getAlbumImage();
-				if (albumImageData != null) {
-					String im =id3v2Tag.getTitle().replace(" ", "");
-					System.out.println("nuevo nombre de imagen....................:"+im);
-					sg.setImage(im+".jpg");
-					getimage(albumImageData, im);
-					System.out.println("Have album image data, length: "
-							+ albumImageData.length + " bytes");
-					System.out.println("Album image mime type: "
-							+ id3v2Tag.getAlbumImageMimeType());
-				}
-				else{
-					sg.setImage("default.jpg");
-				}
-				listsong.add(sg);
-			}
-			i++;
-
+		
+		List<String> songs;
+		boolean chech1 = checkChangesinFolfer();
+		if(chech1==false)
+		{
+			System.out.println("AL SER FALSE LO PILLAMOS DE LA BBDD");
+			listsong=dbo.getSongsfromDB();
+			System.out.println("EN INDEXSONGS TENEMOS UNA LISTA CON"+listsong.size()+"ELEMENTOS");
+			return listsong;
 		}
-		return listsong;
+		else
+		{
+			 songs = GetSongsName();
+			int i = 0;
+			while (i < songs.size()) {
+				Mp3File mp3file = new Mp3File(sDirectorio + songs.get(i));
+				if (mp3file.hasId3v2Tag()) {
+					ID3v2 id3v2Tag = mp3file.getId3v2Tag();
+					Song sg = new Song();
+					sg.setAlbum(id3v2Tag.getAlbum());
+					sg.setArtist(id3v2Tag.getArtist());
+					
+					sg.setName(id3v2Tag.getTitle());
+					
+					
+					System.out.println("AQUI EL LENGHT "+mp3file.getLengthInSeconds());
+					long segundos =mp3file.getLengthInSeconds();
+					
+					
+					segundos = segundos%3600;
+					long minutos = segundos / 60;
+					segundos = segundos%60;
+					
+					System.out.println("Minutos: " + minutos);
+					System.out.println("Segundos: " + segundos);
+					
+					String sminutos = Long.toString(minutos);
+					String ssegundos = Long.toString(segundos);
+					
+					if(sminutos.length()<2)
+					{
+						sminutos="0"+sminutos;
+					}
+					if(ssegundos.length()<2)
+					{
+						ssegundos="0"+ssegundos;
+					}
+					String timemin= sminutos+":"+ssegundos;
+					
+					System.out.println("AQUI TENEMOS EL TIME"+timemin);
+					
+					sg.setDuration(timemin);
+					
+				
+					
+					String idx = songs.get(i).replace("'", "_");
+					sg.setId(idx);
+					
+					if(id3v2Tag.getGenre()==-1)
+					{
+						sg.setGenre("no info");
+					}
+					if(id3v2Tag.getGenre()!=-1)
+					{
+						sg.setGenre(id3v2Tag.getGenreDescription());
+					}
+					
+					byte[] albumImageData = id3v2Tag.getAlbumImage();
+					if (albumImageData != null) {
+						String im =id3v2Tag.getTitle().replace(" ", "");
+						System.out.println("nuevo nombre de imagen....................:"+im);
+						sg.setImage(im+".jpg");
+						getimage(albumImageData, im);
+						System.out.println("Have album image data, length: "
+								+ albumImageData.length + " bytes");
+						System.out.println("Album image mime type: "
+								+ id3v2Tag.getAlbumImageMimeType());
+					}
+					else{
+						sg.setImage("default.jpg");
+						sg.setName(idx);
+					}
+					listsong.add(sg);
+				}
+				i++;
+
+			}
+			dbo.saveSongstoDB(listsong);	
+			return listsong;
+		}
+		
+		
+		
 	}
 
 	public static void getimage(byte[] bytes, String name) throws IOException {
@@ -180,7 +248,28 @@ public class IndexSongs {
 	
 	
 	
+	public boolean checkChangesinFolfer()
 	
+	{
+		File f = new File(sDirectorio);
+		long ms=f.lastModified();
+		Date d = new Date(ms);
+		Calendar c = new GregorianCalendar(); 
+		c.setTime(d);
+		String dia, annio, hora, minuto, segundo, mes;
+		dia = Integer.toString(c.get(Calendar.DATE));
+		mes = Integer.toString(c.get(Calendar.MONTH));
+		annio = Integer.toString(c.get(Calendar.YEAR));
+		hora = Integer.toString(c.get(Calendar.HOUR_OF_DAY));
+		minuto = Integer.toString(c.get(Calendar.MINUTE));
+		segundo = Integer.toString(c.get(Calendar.SECOND));
+		System.out.println(dia+"_"+mes+"__"+annio+"_"+hora+"_"+minuto+"_"+segundo);
+		String lastmod = dia+mes+annio+hora+minuto+segundo;
+		
+		Boolean respx=dbo.checkFolderModified(lastmod);
+		
+		return respx;
+	}
 	
 	
 	

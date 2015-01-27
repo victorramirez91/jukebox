@@ -1,11 +1,15 @@
 package dboperations;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.management.Query;
 
 import objects.ClientIP;
+import objects.Folder;
+import objects.Song;
 import objects.Ticket;
 
 import org.hibernate.SessionFactory;
@@ -21,21 +25,28 @@ public class DBOperations {
 	public static int TICKET_ERR_NOT_FOUND = -1;
 	public static int TICKET_ERR_EXPIRED = -2;
 	public static int TICKET_ERR_ALREADY_USED = -3;
+	public static int IPCLIENT_BANNED = -1;
+	public static int IPCLIENT_OK = 0;
 
 	private AnnotationConfiguration config;
 	private SessionFactory factory;
-	private static DBOperations instance= null;
-	public static DBOperations getInstance(){
-		if( instance == null ) {
+	private static DBOperations instance = null;
+
+	public static DBOperations getInstance() {
+		if (instance == null) {
 			instance = new DBOperations();
 		}
-			
+
 		return instance;
 	}
+
 	private DBOperations() {
 		super();
 		config = new AnnotationConfiguration();
 		config.addAnnotatedClass(Ticket.class);
+		config.addAnnotatedClass(ClientIP.class);
+		config.addAnnotatedClass(Folder.class);
+		config.addAnnotatedClass(Song.class);
 		config.configure();
 		factory = config.buildSessionFactory();
 
@@ -55,6 +66,108 @@ public class DBOperations {
 
 	}
 
+	public String saveSongstoDB(List<Song> lis)
+	{
+		int i =0;
+		Session sesion = factory.openSession();
+		
+		SQLQuery query = sesion.createSQLQuery("DELETE FROM song WHERE 1");
+		
+		query.executeUpdate();
+
+		//sesion.getTransaction().commit();
+		
+		
+		
+		System.out.println("Despues de la query");
+	
+		
+		sesion.beginTransaction();
+		while (i<lis.size())
+		{
+			sesion.save(lis.get(i));
+			i++;
+		}
+		
+		sesion.getTransaction().commit();
+		System.out.println("Ticket saved correctly.");
+		sesion.close();
+		
+		return null;
+	}
+	
+	public ArrayList<Song> getSongsfromDB()
+	{
+		Session sesion = factory.openSession();
+		
+		SQLQuery query = sesion.createSQLQuery("SELECT * FROM song ");
+		query.addEntity(Song.class);
+		 List<Song> listDatos = query.list();
+//		 for (Song datos : listDatos) {
+//		    System.out.println(datos.getAlbum() + "--" + datos.getArtist());
+//		 }
+		 System.out.println("DEVUELVE UNA LISTA DE "+listDatos.size()+"ELEMENTOS ");
+		ArrayList<Song> responsesongs =  new ArrayList<Song>(listDatos);
+		return responsesongs;
+	}
+	
+	public boolean checkFolderModified(String lastmod) {
+		
+		System.out.println(lastmod);
+
+		Session sesion = factory.openSession();
+		System.out.println("checkticket");
+		SQLQuery query = sesion.createSQLQuery("SELECT * FROM folder");
+		System.out.println("Despues de la query");
+		query.addEntity(Folder.class);
+		sesion.beginTransaction();
+		Folder fold = (Folder) query.uniqueResult();
+		System.out.println("Esta es la respuesta" +fold.getLastmodified());
+		//sesion.getTransaction().commit();
+		System.out.println("¿ " +fold.getLastmodified()+"ES IGUAL A  " +lastmod);
+		if(fold.getLastmodified().equals(lastmod) || lastmod==null)
+		{
+			System.out.println("ES IGUAL");
+			sesion.close();
+			return false;
+		}
+		if(fold.getLastmodified()==null)
+		{
+			System.out.println("NO ES IGUAL");
+			fold.setLastmodified(lastmod);
+			System.out.println("LE PONEMOS ESTA LASTMOD  "+fold.getLastmodified());
+			
+			sesion.update(fold);
+			
+			sesion.getTransaction().commit();
+			sesion.close();
+			return true;
+		}
+		
+		if(!fold.getLastmodified().equals(lastmod))
+		{
+			System.out.println("NO ES IGUAL");
+			fold.setLastmodified(lastmod);
+			System.out.println("LE PONEMOS ESTA LASTMOD  "+fold.getLastmodified());
+			
+			sesion.update(fold);
+			
+			sesion.getTransaction().commit();
+			sesion.close();
+			return true;
+			
+		}
+		else 
+			return true;
+		
+		
+
+	}
+	
+	
+	
+	
+	
 	public int checkTicket(String key) {
 		// chequea si la clave esta en la base de datos
 
@@ -78,7 +191,7 @@ public class DBOperations {
 		sesion.close();
 
 		if (ticket == null) {
-			System.out.println("No existe");
+			System.out.println("No existe el ticket");
 			return TICKET_ERR_NOT_FOUND;
 		}
 
@@ -125,52 +238,81 @@ public class DBOperations {
 		return 0;
 
 	}
-	
-	
-	
-	
-	
+
 	public int checkIp(String ip) {
-		
-
+		System.out.println("EN DB: COMPROVAMOS IP"+ip);
 		Session sesion = factory.openSession();
 		System.out.println("check ip");
 
 		SQLQuery query = sesion
-				.createSQLQuery("SELECT * FROM clientip WHERE ip = :key");
+				.createSQLQuery("SELECT * FROM clientip WHERE ip ='"+ip+"'");
 
+		
+		//query.setParameter("ip", ip);
+		System.out.println("ESTA ES LA QUERY : "+ query.toString());
 		query.addEntity(ClientIP.class);
-		query.setString("ip", ip);
 		sesion.beginTransaction();
 		ClientIP cip = (ClientIP) query.uniqueResult();
-		System.out.println(cip.getIp());
+		
 		sesion.getTransaction().commit();
 		sesion.close();
-		return 0;
-
-	}
-public int addtryClient(String ip) {
+		if(cip==null)
+		{
+			System.out.println("EN DB: NO ESTA REGISTRADO EN LA BBDD");
+			return IPCLIENT_OK;
+			
+		}
+		if (cip.isBan() == false) {
+			System.out.println("EN DB: IPCLIENT_OK");
+			return IPCLIENT_OK;
+		} else {
+			System.out.println("EN DB: IPCLIENT_KO");
+			return IPCLIENT_BANNED;
+		}
 		
+	}
+
+	public int addtryClient(String ip) {
 
 		Session sesion = factory.openSession();
 		System.out.println("check ip");
-
+		ClientIP cip=null;
 		SQLQuery query = sesion
-				.createSQLQuery("SELECT * FROM clientip WHERE ip = :key");
+				.createSQLQuery("SELECT * FROM clientip WHERE ip ='"+ip+"'");
 
 		query.addEntity(ClientIP.class);
-		query.setString("ip", ip);
+		//query.setParameter("ip", ip);
 		sesion.beginTransaction();
-		ClientIP cip = (ClientIP) query.uniqueResult();
-		System.out.println(cip.getIp());
+		 cip = (ClientIP) query.uniqueResult();
+		if(cip==null)
+		{
+			System.out.println("ES nulo");
+			ClientIP cip2= new ClientIP(ip, 1, "", false);
+			sesion.save(cip2);
+			sesion.getTransaction().commit();
+			sesion.close();
+			return 0;
+			
+		}
+		else{
+		int tryC=cip.getCounter();
+		if (tryC<10)
+		{
+			tryC++;
+			cip.setCounter(tryC);
+		}
+		if(tryC==10)
+		{
+			cip.setBan(true);
+		}
+		sesion.update(cip);
 		sesion.getTransaction().commit();
 		sesion.close();
 		return 0;
+		}
+		
+		
 
 	}
-	
-	
-	
-	
 
 }

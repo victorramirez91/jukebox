@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import objects.Song;
 import objects.Ticket;
 import objects.TrackMaped;
+import player.PlayerController;
 import jukebox.IndexSongs;
 import jukebox.JukeboxLocalImp;
 import jukebox.JukeboxSpotifyImpl;
@@ -90,7 +91,7 @@ public class ApiJukebox {
 	@GET
 	@Path("/getplaylist")
 	public String getPlaylist(@Context HttpServletRequest request) {
-
+		int cPosition = PlayerController.currentsong;
 		
 		try {
 			
@@ -101,6 +102,7 @@ public class ApiJukebox {
 			Gson Gs = new Gson();
 			String json_available = Gs.toJson(playlistsgs);
 			System.out.println(json_available);
+			
 			return json_available;}
 			
 		} catch (Exception e) {
@@ -119,11 +121,30 @@ public class ApiJukebox {
 	public String queque_song(@PathParam("idsong") String idsong,
 			@PathParam("key") String key, @Context HttpServletRequest request)
 			throws IOException, WebApiException {
-		System.out.println("LA IP QUE ESTA INTRODUCIENDO LA CLAVE ES:  "+request.getLocalAddr());
+		
+		
+		
+		
+		
+		
+		System.out.println("LA IP QUE ESTA INTRODUCIENDO LA CLAVE ES:  "+request.getRemoteAddr());
 		opdb = DBOperations.getInstance();
+		
+		
+		int ipState= opdb.checkIp(request.getRemoteAddr());
+		
+		if(ipState==DBOperations.IPCLIENT_BANNED)
+		{
+			return "Has intentado mas de 10 veces una clave erronea";
+		}
+		
+		else{
+		
+		
 		int checking = opdb.checkTicket(key);
 		if (checking == DBOperations.TICKET_ERR_NOT_FOUND) {
 			System.out.println("Ticket incorrecto");
+			opdb.addtryClient(request.getRemoteAddr());
 			return "Incorrecto";
 		}
 		if (checking == DBOperations.TICKET_OK) {
@@ -144,7 +165,7 @@ public class ApiJukebox {
 			return "El tiquet ya se ha usado";
 		} else
 			return "error";
-
+		}
 	}
 
 	@GET
@@ -192,6 +213,17 @@ public class ApiJukebox {
 		
 
 	}
+//	@GET
+//	@Path("/getplaylist")
+//	public String getCurrentPlaylist(@PathParam("song") String song,
+//
+//	@Context HttpServletRequest request) throws IOException, WebApiException {
+//
+//		
+//
+//		return "HELLO";
+//	}
+	
 
 	@GET
 	@Path("/insertSpoti_song/{song}")

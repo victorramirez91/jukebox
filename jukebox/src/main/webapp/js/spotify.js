@@ -14,33 +14,26 @@ $("#available").click(function(){
 	$('#track').hide();
 	getavailablesongs();
 	});
-
-
-
-$(document).ready(main);
- 
-var contador = 1;
- 
-function main(){
-	$('#prova2').hide();
-	$('.incon-list2').click(function(){
-		// $('nav').toggle(); 
- 
-		if(contador == 1){
-			$('nav').animate({
-				left: '0'
-			});
-			contador = 0;
-		} else {
-			contador = 1;
-			$('nav').animate({
-				left: '-100%'
-			});
-		}
- 
+$("#cavailable").click(function(){
+	
+	alert("HOLA!")
+	$('#songs-data ').empty();
+	$('#prova').hide();
+	$('#track').hide();
+	getavailablesongs();
 	});
- 
-};
+$("#cplaylist").click(function(){
+	
+	alert("HOLA!")
+	window.location='Playlist.html'
+	});
+
+
+$( document ).ready(function() {
+	
+	
+	getavailablesongs();
+	});
 
 
 

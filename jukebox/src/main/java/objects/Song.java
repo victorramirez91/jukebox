@@ -1,14 +1,19 @@
 package objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Song {
-	
+	@Id
+	String id;
 	String Artist;
 	String Name;
 	String genre;
 	String duration;
 	String image;
 	String album;
-	String id;
+
 	
 	
 	public String getDuration() {

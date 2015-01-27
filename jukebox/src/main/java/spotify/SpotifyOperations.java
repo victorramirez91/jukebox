@@ -40,7 +40,7 @@ public class SpotifyOperations {
 			  .clientId(clientId)
 			  .clientSecret(clientSecret)
 			  .redirectURI(redirectUri)
-			  .refreshToken(refreshToken)
+			  .refreshToken(refreshToken)	
 			  .build();
     
     public int addSong(String track) throws IOException, WebApiException

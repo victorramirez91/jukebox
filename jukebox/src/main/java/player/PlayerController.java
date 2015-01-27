@@ -12,7 +12,7 @@ public class PlayerController {
 	public static List<String> playlist = new ArrayList<String>();
 	static String folder = IndexSongs.sDirectorio;
 	private static PlayerController instance;
-	static int playlistlongitude, currentsong = 0;
+	public static int playlistlongitude, currentsong = 0;
 
 	public static synchronized PlayerController getInstance() {
 		if (instance == null) {

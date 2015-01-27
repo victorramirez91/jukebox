@@ -8,12 +8,15 @@
 	header{
 		background: #00445e;
 		float: left;
-width: 100%;
+		
+top:0;
+		width: 100%;
 	}
 	a{
 		color: black;
 	}
 	.titular {
+
 float: left;
 padding-left: 15px;
 }
@@ -22,6 +25,7 @@ padding-left: 15px;
 		font-family: 'Kaushan Script', cursive;
 	}
 	.btnRecomendados {
+
 	float: left;
 	width: 50%;
 	text-align: center;
