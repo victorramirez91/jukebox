@@ -169,7 +169,7 @@ public class IndexSongs {
 					if (albumImageData != null) {
 						String im =id3v2Tag.getTitle().replace(" ", "");
 						System.out.println("nuevo nombre de imagen....................:"+im);
-						sg.setImage(im+".jpg");
+						sg.setImage("/jukebox/images/"+im+".jpg");
 						getimage(albumImageData, im);
 						System.out.println("Have album image data, length: "
 								+ albumImageData.length + " bytes");
@@ -177,7 +177,7 @@ public class IndexSongs {
 								+ id3v2Tag.getAlbumImageMimeType());
 					}
 					else{
-						sg.setImage("default.jpg");
+						sg.setImage("/jukebox/images/default.jpg");
 						sg.setName(idx);
 					}
 					listsong.add(sg);

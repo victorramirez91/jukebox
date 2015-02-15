@@ -177,9 +177,17 @@ public class ApiJukebox {
 		System.out.println("VAMOS A BUSCAR: " + search_s);
 		ArrayList<Song> tracks = new ArrayList<Song>();
 		tracks = jukebox.search(search_s);
-		if (tracks == null)
+		if (tracks.size() ==0)
 		{
-			return "Lo Sentimos, no hay coincidencias.";
+			System.out.println("API: NO HAN HABIDO COINCIDENCIAS");
+			Song err = new Song();
+			err.setId("error");
+			tracks.add(err);
+			Gson gson = new Gson();
+			String json_result_s2 = gson.toJson(tracks);
+			System.out.println(json_result_s2);
+			return json_result_s2;
+			
 		}
 		Gson gson = new Gson();
 		String json_result_s = gson.toJson(tracks);

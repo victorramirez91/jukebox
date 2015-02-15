@@ -45,7 +45,7 @@ public class PlayerController {
 
 	public String initalizePlayer() {
 
-		player.play(folder + playlist.get(0));
+		player.play(folder + playlist.get(playlistlongitude -1));
 		currentsong++;
 		return null;
 	}

@@ -39,7 +39,16 @@ public class JukeboxSpotifyImpl implements Jukebox {
 				Track tracktemp = tracksArray.get(i);
 				s.setAlbum(tracktemp.getAlbum().getName());
 				s.setArtist(tracktemp.getArtists().get(0).getName());
-				s.setDuration(Integer.toString(tracktemp.getDuration()));
+				int segundos = tracktemp.getDuration()/1000;
+				 segundos = segundos%3600;
+				int  minutos = segundos / 60;
+				segundos = segundos%60;
+				String segStr = Integer.toString(segundos);
+				if(segStr.length()<2)
+				{
+					segStr = "0"+segStr;
+				}
+				s.setDuration((minutos+":"+segStr));
 				s.setGenre("no info");
 				s.setId(tracktemp.getId());
 				s.setName(tracktemp.getName());

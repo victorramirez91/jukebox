@@ -1,52 +1,50 @@
-$("#prova").click(function(){
+$("#searchsg1").click(function() {
 	var track = $('#track').val();
-	alert(track)
+	$('#prova').hide();
+
+	if (track == '') {
+		alert('No puedes dejar este campo en blanco')
+	};
+	if (track != '') {
+		$('#songs-data ').empty()
+		getSpotiSongs(track)
+	};
+
+});
+$("#available").click(function() {
 	$('#songs-data ').empty();
 	$('#prova').hide();
-	$('#track').hide();
-	getSpotiSongs (track);
-	});
-$("#available").click(function(){
-	
-	alert("HOLA!")
+
+	getavailablesongs();
+});
+$("#cavailable").click(function() {
 	$('#songs-data ').empty();
 	$('#prova').hide();
-	$('#track').hide();
+
 	getavailablesongs();
-	});
-$("#cavailable").click(function(){
-	
-	alert("HOLA!")
-	$('#songs-data ').empty();
-	$('#prova').hide();
-	$('#track').hide();
+});
+$("#cplaylist").click(function() {
+
+
+	window.location = 'Playlist.html'
+});
+
+
+$(document).ready(function() {
 	getavailablesongs();
-	});
-$("#cplaylist").click(function(){
-	
-	alert("HOLA!")
-	window.location='Playlist.html'
-	});
-
-
-$( document ).ready(function() {
-	
-	
-	getavailablesongs();
-	});
+});
 
 
 
-
-$("#prova2").click(function(){
+$("#prova2").click(function() {
 	$('#prova').show();
 	$('#track').show();
 	$('#prova2').hide();
 	$('#songs-data').empty();
-	
-	});
+
+});
 
 $("#a").click(function() {
-    alert(this.val); // id of clicked li by directly accessing DOMElement property
-    
+	alert(this.val); // id of clicked li by directly accessing DOMElement property
+
 });
