@@ -110,6 +110,20 @@ public class DBOperations {
 		ArrayList<Song> responsesongs =  new ArrayList<Song>(listDatos);
 		return responsesongs;
 	}
+	public ArrayList<Song> searchSong(String busquedadb)
+	{
+		Session sesion = factory.openSession();
+		
+		SQLQuery query = sesion.createSQLQuery("SELECT * FROM song WHERE id LIKE "+"'%"+busquedadb+"%'"+" or Artist LIKE "+"'%"+busquedadb+"%'"+" or Name LIKE "+"'%"+busquedadb+"%'"+" or album LIKE "+"'%"+busquedadb+"%'");
+		query.addEntity(Song.class);
+		 List<Song> listDatos = query.list();
+//		 for (Song datos : listDatos) {
+//		    System.out.println(datos.getAlbum() + "--" + datos.getArtist());
+//		 }
+		 System.out.println("DEVUELVE UNA LISTA DE "+listDatos.size()+"ELEMENTOS ");
+		ArrayList<Song> responsesongs =  new ArrayList<Song>(listDatos);
+		return responsesongs;
+	}
 	
 	public boolean checkFolderModified(String lastmod) {
 		

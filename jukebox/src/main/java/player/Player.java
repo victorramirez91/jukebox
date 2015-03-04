@@ -1,16 +1,18 @@
 package player;
 
 import java.io.File;
-
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Map;
 
+import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
+ 
 public class Player implements BasicPlayerListener {
 
 	//private static Player instance = null;
@@ -33,6 +35,7 @@ public class Player implements BasicPlayerListener {
 
 	public void play(String filename) {
 		// Instantiate BasicPlayer.
+		System.out.println("EN PLAYER QUEREMOS REPR"+filename);
 		BasicPlayer player = new BasicPlayer();
 		// BasicPlayer is a BasicController.
 		BasicController control = player;
@@ -122,7 +125,15 @@ public class Player implements BasicPlayerListener {
 
 		display("stateUpdated : " + event.toString());
 		System.out.println(event.toString());
-		pc.nextSong(event.toString());
+		try {
+			pc.nextSong(event.toString());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

@@ -1,4 +1,4 @@
-$("#pepe").click(function(){
+$("#gticket").click(function(){
 	 
 	  getticket();
 	});

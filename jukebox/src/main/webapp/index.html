@@ -24,7 +24,7 @@
 
 
 			<div class="site-wrapper-inner">
-		<style>
+<style>
 #reloj {
 	border-radius: 5px;
 	color: #FFFFFF;
@@ -36,6 +36,7 @@
 	
 	
 }
+
 </style>
 		<div id="tiempo"  align="center"   style="font-family: verdana; font-size: 35px;">
 				</div>
@@ -89,13 +90,17 @@
 						+ diasSemana[f.getDay()] + ", " + f.getDate() + " de "
 						+ meses[f.getMonth()] + " de " + f.getFullYear();
 			</script>
+			<div class ="player-control">
+				<button type="button" class="btn btn-success" id="playerplay">Play</button>
+				<button type="button" class="btn btn-danger"id="playerstop">Stop</button>
+			</div>
 				<div class="cover-container">
 
 
 
 					<div class="inner cover">
 						<h1 class="cover-heading2">Generate a ticket</h1>
-						<button type="button" class="btn btn-default" id="pepe">button</button>
+						<button type="button" class="btn btn-default" id="gticket">Generate ticket</button>
 						<!-- <div id="pepe">hola</div> -->
 
 						<div class="btn-group">
@@ -123,7 +128,7 @@
 
 					<div class="mastfoot">
 						<div class="inner">
-							<p>First testing</p>
+							<p>Jukebox ®</p>
 						</div>
 					</div>
 
@@ -139,7 +144,7 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 
-	<script type="text/javascript" src="js/ticket.js"></script>
+	<script type="text/javascript" src="js/admin.js"></script>
 	<script type="text/javascript" src="js/api.js"></script>
 
 	<script type="bootstrap/text/javascript"> 

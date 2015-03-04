@@ -13,8 +13,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
-
-
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -40,10 +38,12 @@ import player.PlayerController;
 public class IndexSongs {
 	public static String sDirectorio = "C:/Users/Victorz/jukeboxsongs/AllSongs/";
 	static IndexSongs instance;
-	DBOperations dbo =DBOperations.getInstance();
+	DBOperations dbo = DBOperations.getInstance();
+
 	public String getcurrentfolfer() {
 		return sDirectorio;
 	}
+
 	public static IndexSongs getInstance() {
 		if (instance == null) {
 			instance = new IndexSongs();
@@ -51,22 +51,20 @@ public class IndexSongs {
 
 		return instance;
 	}
+
 	private IndexSongs() {
 		System.out.println("INITIALIZE INDEXXXXXXX");
 		// TODO Auto-generated constructor stub
 	}
+
 	ArrayList<Song> listsong = new ArrayList<Song>();
 	ArrayList<TrackMaped> listtracks = new ArrayList<TrackMaped>();
 
 	// Metodo para buscar las canciones que hay en un determinado directorio
 	public List<String> GetSongsName() {
 		List<String> songslist = new ArrayList<String>();
-		
-		
-		
 
 		File f = new File(sDirectorio);
-
 
 		if (f.exists()) {
 			System.out.println("Directorio existe");
@@ -78,7 +76,7 @@ public class IndexSongs {
 		File[] ficheros = f.listFiles();
 
 		int i = 0;
-		 songslist = new ArrayList<String>();
+		songslist = new ArrayList<String>();
 		while (i < ficheros.length) {
 			if ((ficheros[i].toString().toLowerCase().endsWith(".mp3"))) {
 
@@ -97,20 +95,19 @@ public class IndexSongs {
 
 	}
 
-	public ArrayList<Song> getSongsObject() throws UnsupportedTagException, InvalidDataException, IOException {
-		
+	public ArrayList<Song> getSongsObject() throws UnsupportedTagException,
+			InvalidDataException, IOException {
+
 		List<String> songs;
 		boolean chech1 = checkChangesinFolfer();
-		if(chech1==false)
-		{
+		if (chech1 == false) {
 			System.out.println("AL SER FALSE LO PILLAMOS DE LA BBDD");
-			listsong=dbo.getSongsfromDB();
-			System.out.println("EN INDEXSONGS TENEMOS UNA LISTA CON"+listsong.size()+"ELEMENTOS");
+			listsong = dbo.getSongsfromDB();
+			System.out.println("EN INDEXSONGS TENEMOS UNA LISTA CON"
+					+ listsong.size() + "ELEMENTOS");
 			return listsong;
-		}
-		else
-		{
-			 songs = GetSongsName();
+		} else {
+			songs = GetSongsName();
 			int i = 0;
 			while (i < songs.size()) {
 				Mp3File mp3file = new Mp3File(sDirectorio + songs.get(i));
@@ -119,64 +116,58 @@ public class IndexSongs {
 					Song sg = new Song();
 					sg.setAlbum(id3v2Tag.getAlbum());
 					sg.setArtist(id3v2Tag.getArtist());
-					
+
 					sg.setName(id3v2Tag.getTitle());
-					
-					
-					System.out.println("AQUI EL LENGHT "+mp3file.getLengthInSeconds());
-					long segundos =mp3file.getLengthInSeconds();
-					
-					
-					segundos = segundos%3600;
+
+					System.out.println("AQUI EL LENGHT "
+							+ mp3file.getLengthInSeconds());
+					long segundos = mp3file.getLengthInSeconds();
+
+					segundos = segundos % 3600;
 					long minutos = segundos / 60;
-					segundos = segundos%60;
-					
+					segundos = segundos % 60;
+
 					System.out.println("Minutos: " + minutos);
 					System.out.println("Segundos: " + segundos);
-					
+
 					String sminutos = Long.toString(minutos);
 					String ssegundos = Long.toString(segundos);
-					
-					if(sminutos.length()<2)
-					{
-						sminutos="0"+sminutos;
+
+					if (sminutos.length() < 2) {
+						sminutos = "0" + sminutos;
 					}
-					if(ssegundos.length()<2)
-					{
-						ssegundos="0"+ssegundos;
+					if (ssegundos.length() < 2) {
+						ssegundos = "0" + ssegundos;
 					}
-					String timemin= sminutos+":"+ssegundos;
-					
-					System.out.println("AQUI TENEMOS EL TIME"+timemin);
-					
+					String timemin = sminutos + ":" + ssegundos;
+
+					System.out.println("AQUI TENEMOS EL TIME" + timemin);
+
 					sg.setDuration(timemin);
-					
-				
-					
+
 					String idx = songs.get(i).replace("'", "_");
 					sg.setId(idx);
-					
-					if(id3v2Tag.getGenre()==-1)
-					{
+
+					if (id3v2Tag.getGenre() == -1) {
 						sg.setGenre("no info");
 					}
-					if(id3v2Tag.getGenre()!=-1)
-					{
+					if (id3v2Tag.getGenre() != -1) {
 						sg.setGenre(id3v2Tag.getGenreDescription());
 					}
-					
+
 					byte[] albumImageData = id3v2Tag.getAlbumImage();
 					if (albumImageData != null) {
-						String im =id3v2Tag.getTitle().replace(" ", "");
-						System.out.println("nuevo nombre de imagen....................:"+im);
-						sg.setImage("/jukebox/images/"+im+".jpg");
+						String im = id3v2Tag.getTitle().replace(" ", "");
+						System.out
+								.println("nuevo nombre de imagen....................:"
+										+ im);
+						sg.setImage("/jukebox/images/" + im + ".jpg");
 						getimage(albumImageData, im);
 						System.out.println("Have album image data, length: "
 								+ albumImageData.length + " bytes");
 						System.out.println("Album image mime type: "
 								+ id3v2Tag.getAlbumImageMimeType());
-					}
-					else{
+					} else {
 						sg.setImage("/jukebox/images/default.jpg");
 						sg.setName(idx);
 					}
@@ -185,12 +176,10 @@ public class IndexSongs {
 				i++;
 
 			}
-			dbo.saveSongstoDB(listsong);	
+			dbo.saveSongstoDB(listsong);
 			return listsong;
 		}
-		
-		
-		
+
 	}
 
 	public static void getimage(byte[] bytes, String name) throws IOException {
@@ -217,44 +206,38 @@ public class IndexSongs {
 		Graphics2D g2 = bufferedImage.createGraphics();
 		g2.drawImage(image, null, null);
 
-		File imageFile = new File("C:/Users/Victorz/git/tfg/jukebox/src/main/webapp/images/"+ name + ".jpg");
+		File imageFile = new File(
+				"C:/Users/Victorz/git/tfg/jukebox/src/main/webapp/images/"
+						+ name + ".jpg");
 		ImageIO.write(bufferedImage, "jpg", imageFile);
 
 		System.out.println(imageFile.getPath());
 	}
 
-	public String returnSongsJson() throws UnsupportedTagException, InvalidDataException, IOException
-	{
-		
-		if(listsong==null)
-		{
-			listsong= getSongsObject();
+	public String returnSongsJson() throws UnsupportedTagException,
+			InvalidDataException, IOException {
+
+		if (listsong == null) {
+			listsong = getSongsObject();
 			String json = new Gson().toJson(listsong);
 
 			return json;
-		}
-		else{
+		} else {
 			String json = new Gson().toJson(listsong);
 
 			return json;
-			
+
 		}
-		
-		
-		
+
 	}
-	
-	
-	
-	
-	
+
 	public boolean checkChangesinFolfer()
-	
+
 	{
 		File f = new File(sDirectorio);
-		long ms=f.lastModified();
+		long ms = f.lastModified();
 		Date d = new Date(ms);
-		Calendar c = new GregorianCalendar(); 
+		Calendar c = new GregorianCalendar();
 		c.setTime(d);
 		String dia, annio, hora, minuto, segundo, mes;
 		dia = Integer.toString(c.get(Calendar.DATE));
@@ -263,25 +246,15 @@ public class IndexSongs {
 		hora = Integer.toString(c.get(Calendar.HOUR_OF_DAY));
 		minuto = Integer.toString(c.get(Calendar.MINUTE));
 		segundo = Integer.toString(c.get(Calendar.SECOND));
-		System.out.println(dia+"_"+mes+"__"+annio+"_"+hora+"_"+minuto+"_"+segundo);
-		String lastmod = dia+mes+annio+hora+minuto+segundo;
-		
-		Boolean respx=dbo.checkFolderModified(lastmod);
-		
+		System.out.println(dia + "_" + mes + "__" + annio + "_" + hora + "_"
+				+ minuto + "_" + segundo);
+		String lastmod = dia + mes + annio + hora + minuto + segundo;
+
+		Boolean respx = dbo.checkFolderModified(lastmod);
+
 		return respx;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public String getSongsJson() {
 
 		List<String> songs = GetSongsName();

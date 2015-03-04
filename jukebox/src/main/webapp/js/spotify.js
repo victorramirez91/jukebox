@@ -11,6 +11,21 @@ $("#searchsg1").click(function() {
 	};
 
 });
+$('#track').keyup(function(){
+	var track = $('#track').val();
+	if (track.length >= 1)
+		{	
+			$('#songs-data ').empty()
+			getSpotiSongs(track)
+		};
+		if (track.length == 0)
+		{	
+			$('#songs-data ').empty()
+			getavailablesongs()
+		};
+
+
+});
 $("#available").click(function() {
 	$('#songs-data ').empty();
 	$('#prova').hide();

@@ -1,5 +1,6 @@
 package api;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -12,10 +13,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import javazoom.jl.decoder.JavaLayerException;
 import objects.Song;
 import objects.Ticket;
 import objects.TrackMaped;
 import player.PlayerController;
+import player.TestController;
 import jukebox.IndexSongs;
 import jukebox.JukeboxLocalImp;
 import jukebox.JukeboxSpotifyImpl;
@@ -40,15 +43,35 @@ public class ApiJukebox {
 	JukeboxLocalImp jukebox = JukeboxLocalImp.getInstance();
 
 	@GET
-	@Path("/prova/{param}")
-	public Response getMsg(@PathParam("param") String msg) {
-
+	@Path("/play")
+	public void getMsg(@PathParam("param") String msg) {
+		PlayerController pc = PlayerController.getInstance();
+		try {
+			pc.initalizePlayer();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String output = "Jersey say : " + msg;
 
-		return Response.status(200).entity(output).build();
+		//return Response.status(200).entity(output).build();
 
 	}
+	@GET
+	@Path("/stop")
+	public void getMsg2(@PathParam("param") String msg) {
+		PlayerController pc = PlayerController.getInstance();
+		
+			pc.stopPlayer();
+		
+		String output = "Jersey say : " + msg;
 
+		//return Response.status(200).entity(output).build();
+
+	}
 
 	@GET
 	@Path("/getticket")

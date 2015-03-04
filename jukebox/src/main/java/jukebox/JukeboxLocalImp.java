@@ -7,6 +7,7 @@ import java.util.List;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
+import dboperations.DBOperations;
 import objects.Song;
 import player.Player;
 import player.PlayerController;
@@ -17,6 +18,7 @@ public class JukeboxLocalImp implements Jukebox {
 	static JukeboxLocalImp instance;
 	PlayerController playerc;
 	IndexSongs is;
+	DBOperations dbo;
 
 	public static JukeboxLocalImp getInstance() {
 		if (instance == null) {
@@ -29,8 +31,8 @@ public class JukeboxLocalImp implements Jukebox {
 	private JukeboxLocalImp() {
 		playerc = PlayerController.getInstance();
 		is = IndexSongs.getInstance();
+		dbo = DBOperations.getInstance();
 		
-
 	}
 
 	public ArrayList<Song> getSongs() {
@@ -55,18 +57,24 @@ public class JukeboxLocalImp implements Jukebox {
 	}
 
 	public ArrayList<Song> getPlaylist() {
-		try {
-			availableSongs = is.getSongsObject();
-		} catch (UnsupportedTagException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidDataException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		
+		if (availableSongs == null) {
+			try {
+				availableSongs = is.getSongsObject();
+			} catch (UnsupportedTagException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidDataException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		System.out.println(availableSongs.size());
 		}
+		
 		List<String> plst = playerc.getPlayList();
 		System.out.println("PLAYLIST SIZE" + plst.size());
 		ArrayList<Song> playlstsngs = new ArrayList<Song>();
@@ -101,34 +109,36 @@ public class JukeboxLocalImp implements Jukebox {
 
 	public ArrayList<Song> search(String term) {
 		ArrayList<Song> songssrch = new ArrayList<Song>();
+		
+		songssrch = dbo.searchSong(term);
 
-		if (availableSongs == null) {
-			try {
-				availableSongs = is.getSongsObject();
-			} catch (UnsupportedTagException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidDataException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		System.out.println("VAMOS A BUSCAR EN LOCAL" + term);
-		int in = 0;
-		while (in < availableSongs.size()) {
-			String cadena = availableSongs.get(in).getName();
-			System.out.println("CADENA:     " + cadena);
-			int resultado = cadena.indexOf(term);
-			System.out.println("COINCIDENCIAS:     " + resultado);
-			if (resultado != -1) {
-
-				songssrch.add(availableSongs.get(in));
-			}
-			in++;
-		}
+//		if (availableSongs == null) {
+//			try {
+//				availableSongs = is.getSongsObject();
+//			} catch (UnsupportedTagException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (InvalidDataException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println("VAMOS A BUSCAR EN LOCAL" + term);
+//		int in = 0;
+//		while (in < availableSongs.size()) {
+//			String cadena = availableSongs.get(in).getName();
+//			System.out.println("CADENA:     " + cadena);
+//			int resultado = cadena.indexOf(term);
+//			System.out.println("COINCIDENCIAS:     " + resultado);
+//			if (resultado != -1) {
+//
+//				songssrch.add(availableSongs.get(in));
+//			}
+//			in++;
+//		}
 		System.out.println("LA LONG EN LA IMPLEMENTACION: "+songssrch.size());
 		return songssrch;
 

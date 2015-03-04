@@ -1,5 +1,7 @@
-	var IP = "http://localhost:8080/jukebox"
+	var IP = "http://192.168.1.139:8080/jukebox"
+	//var IP = "http://10.189.165.158:8080/jukebox"
 	var API_BASE_URL = IP + "/rest/api/";
+	var datacontrol;
 
 	function getticket() {
 
@@ -22,6 +24,53 @@
 			}
 		});
 	}
+
+
+function playplayer() {
+
+		var url = API_BASE_URL + 'play';
+
+		$.ajax({
+			url: url,
+			type: 'GET',
+
+			crossDomain: true,
+			dataType: 'json',
+			success: function(data, status, jqxhr) {
+
+				
+
+			},
+			error: function(jqXHR, options, error) {
+				alert(jqXHR + error + options);
+			}
+		});
+	}
+
+
+function stopplayer() {
+
+		var url = API_BASE_URL + 'stop';
+
+		$.ajax({
+			url: url,
+			type: 'GET',
+
+			crossDomain: true,
+			dataType: 'json',
+			success: function(data, status, jqxhr) {
+
+				
+
+			},
+			error: function(jqXHR, options, error) {
+				alert(jqXHR + error + options);
+			}
+		});
+	}
+
+
+
 
 
 	function check_key(idpet, key_input) {
@@ -74,27 +123,27 @@
 				$('#prova2').show();
 				$.each(response, function(index, value) {
 					if (value.id == 'error') {
-						alert("KO");
+						
 						$('#songs-data').append("<h1>Lo sentimos, no se han encontrado coincidencias.</h1>");
 					} else
-						$('#songs-data').append("<a href='Insertkey.html?id=" + value.id + "' ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
-							"<img src=" + value.image + " ' class='img-responsive' alt=''>" +
-							"</div>" +
-							"<div class='textoCancion'>" +
-							"<div class='nameAutor'>" +
-							"<span class='nameSong'>" + value.Name + "</span>" +
-							"<span class='separacion'>-</span>" +
-							"<span class='autor'>" + value.Artist + "</span>" +
+					$('#songs-data').append("<a href='Insertkey.html?id=" + value.id + "' ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
+						"<img src=" + value.image + " ' class='img-responsive' alt=''>" +
+						"</div>" +
+						"<div class='textoCancion'>" +
+						"<div class='nameAutor'>" +
+						"<span class='nameSong'>" + value.Name + "</span>" +
+						"<span class='separacion'>-</span>" +
+						"<span class='autor'>" + value.Artist + "</span>" +
 
-							"</div>" +
+						"</div>" +
 
 
-							"<div class='album'>" + value.Artist + "</div>" +
-							"<div class='duracion'>" + value.duration + "</div>" +
+						"<div class='album'>" + value.Artist + "</div>" +
+						"<div class='duracion'>" + value.duration + "</div>" +
 
-							"</div>" +
-							"<div class='clear'></div>" +
-							"</div></a>");
+						"</div>" +
+						"<div class='clear'></div>" +
+						"</div></a>");
 
 				});
 			},
@@ -102,9 +151,9 @@
 				alert(jqXHR + error + options);
 			}
 		});
-	}
+}
 
-	function getavailablesongs() {
+function getavailablesongs() {
 
 		//var url = API_BASE_URL + 'search_song/'+track;
 		var url = API_BASE_URL + 'getsongs/';
@@ -118,6 +167,7 @@
 			success: function(data, status, jqxhr) {
 				var response = data;
 				$('#prova2').show();
+
 				$.each(response, function(index, value) {
 
 					$('#songs-data').append("<a href='Insertkey.html?id=" + value.id + "' ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
@@ -145,9 +195,9 @@
 				alert("getavailablesongs"+ jqXHR + error + options);
 			}
 		});
-	}
+}
 
-	function getplaylist() {
+function getplaylist() {
 
 		//var url = API_BASE_URL + 'search_song/'+track;
 		var url = API_BASE_URL + 'getplaylist/';
@@ -161,95 +211,99 @@
 			success: function(data, status, jqxhr) {
 				var response = data;
 				$('#prova2').show();
-				$.each(response, function(index, value) {
-					if (index == 0) {
+				if(response !=datacontrol){
+					datacontrol=response;
+					$('#songs-data ').empty();
+					$.each(response, function(index, value) {
+						if (index == 0) {
 
-						$('#songs-data').append("<a  ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
-							"<img src=" + value.image + " ' class='img-responsive' alt=''>" +
-							"</div>" +
-							"<div class='textoCancion'>" +
-							"<div class='nameAutor'>" +
-							"<span class='nameSong'>" + value.Name + "</span>" +
-							"<span class='separacion'>-</span>" +
-							"<span class='autor'>" + value.Artist + "</span>" +
+							$('#songs-data').append("<a  ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
+								"<img src=" + value.image + " ' class='img-responsive' alt=''>" +
+								"</div>" +
+								"<div class='textoCancion'>" +
+								"<div class='nameAutor'>" +
+								"<span class='nameSong'>" + value.Name + "</span>" +
+								"<span class='separacion'>-</span>" +
+								"<span class='autor'>" + value.Artist + "</span>" +
 
-							"</div>" +
-
-
-							"<div class='album'>" + index + "</div>" +
-							"<div class='duracion'>" + value.duration + "</div>" +
-
-							"</div>" +
-							"<div class='clear'></div>" +
-							"</div></a>");
-					}
-					if (index != 0) {
-						$('#songs-data').append("<a  ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
-							"<img  ' class='img-responsive' alt=''>" +
-							"</div>" +
-
-							"<div >" +
-							"<div >" +
-							"<span >" + value.Name + "</span>" +
-							"<span >-</span>" +
-							"<span >" + value.Artist + "</span>" +
-
-							"</div>" +
+								"</div>" +
 
 
-							"<div class>" + value.duration + "</div>" +
+								"<div class='album'>" + index + "</div>" +
+								"<div class='duracion'>" + value.duration + "</div>" +
 
-							"</div>" +
-							"<div class='clear'></div>" +
-							"</div></a>");
-					}
+								"</div>" +
+								"<div class='clear'></div>" +
+								"</div></a>");
+						}
+						if (index != 0) {
+							$('#songs-data').append("<a  ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
+								"<img  ' class='img-responsive' alt=''>" +
+								"</div>" +
 
-				});
-			},
-			error: function(jqXHR, options, error) {
-				alert(jqXHR + error + options);
-			}
-		});
-	}
+								"<div >" +
+								"<div >" +
+								"<span >" + value.Name + "</span>" +
+								"<span >-</span>" +
+								"<span >" + value.Artist + "</span>" +
 
-	function getSpotiSong(track) {
-
-		var url = API_BASE_URL + 'get_song/' + track;
-
-
-		$.ajax({
-			url: url,
-			type: 'GET',
-
-			crossDomain: true,
-			dataType: 'json',
-			success: function(data, status, jqxhr) {
+								"</div>" +
 
 
+								"<div class>" + value.duration + "</div>" +
 
-				$('#songs-data').append("<a href='#' ><div class='cancion' id = " + data.id + " > <div class='imagen'>" +
-					"<img src=" + data.image + " ' class='img-responsive' alt=''>" +
-					"</div>" +
-					"<div class='textoCancion'>" +
-					"<div class='nameAutor'>" +
-					"<span class='nameSong'>" + data.Name + "</span>" +
-					"<span class='separacion'>-</span>" +
-					"<span class='autor'>" + data.Artist + "</span>" +
+								"</div>" +
+								"<div class='clear'></div>" +
+								"</div></a>");
+						}
 
-					"</div>" +
+					});
+				}		
+},
+error: function(jqXHR, options, error) {
+	alert("soy playlist"+jqXHR + error + options);
+}
+});
+}
+
+function getSpotiSong(track) {
+
+	var url = API_BASE_URL + 'get_song/' + track;
 
 
-					"<div class='album'>" + data.Artist + "</div>" +
-					"<div class='duracion'>" + data.duration + "</div>" +
+	$.ajax({
+		url: url,
+		type: 'GET',
 
-					"</div>" +
-					"<div class='clear'></div>" +
-					"</div></a>");
+		crossDomain: true,
+		dataType: 'json',
+		success: function(data, status, jqxhr) {
 
 
-			},
-			error: function(jqXHR, options, error) {
-				alert(jqXHR + error + options);
-			}
-		});
-	}
+
+			$('#songs-data').append("<a href='#' ><div class='cancion' id = " + data.id + " > <div class='imagen'>" +
+				"<img src=" + data.image + " ' class='img-responsive' alt=''>" +
+				"</div>" +
+				"<div class='textoCancion'>" +
+				"<div class='nameAutor'>" +
+				"<span class='nameSong'>" + data.Name + "</span>" +
+				"<span class='separacion'>-</span>" +
+				"<span class='autor'>" + data.Artist + "</span>" +
+
+				"</div>" +
+
+
+				"<div class='album'>" + data.Artist + "</div>" +
+				"<div class='duracion'>" + data.duration + "</div>" +
+
+				"</div>" +
+				"<div class='clear'></div>" +
+				"</div></a>");
+
+
+		},
+		error: function(jqXHR, options, error) {
+			alert(jqXHR + error + options);
+		}
+	});
+}
