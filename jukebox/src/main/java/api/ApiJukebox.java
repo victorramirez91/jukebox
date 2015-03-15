@@ -122,14 +122,15 @@ public class ApiJukebox {
 			
 			// List<String> names = index.GetSongsName();
 			if(playlistsgs != null){
+			
 			Gson Gs = new Gson();
 			String json_available = Gs.toJson(playlistsgs);
 			System.out.println(json_available);
-			
+			System.out.println(json_available);
 			return json_available;}
 			
 		} catch (Exception e) {
-			return "Lista de reproduccion vacia...";
+			return "Lista de reproduccion vacia..."+e.toString();
 		}
 		return null;
 		

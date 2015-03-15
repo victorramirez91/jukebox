@@ -1,7 +1,6 @@
 package player;
 
 import java.awt.Graphics2D;
-
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -39,6 +38,15 @@ public class TestEtiquetasMp3 {
 	
 	public static void getimage (byte[] bytes, String name) throws IOException
 	{
+		
+		
+		
+		
+		@SuppressWarnings("unused")
+		
+		
+		Object newobject = new Object();
+		
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         Iterator<?> readers = ImageIO.getImageReadersByFormatName("jpg");
  

@@ -12,7 +12,7 @@ public class PlayerController {
 	// Player player;
 	TestController player;
 	IndexSongs index;
-	Boolean controlador=false;
+	Boolean controlador = false;
 	public static List<String> playlistaux = new ArrayList<String>();
 	public static List<String> playlist = new ArrayList<String>();
 	static String folder = IndexSongs.sDirectorio;
@@ -23,19 +23,18 @@ public class PlayerController {
 
 	public static synchronized PlayerController getInstance() {
 		if (instance == null) {
-			System.out.println("ES null");
+			
 			instance = new PlayerController();
 		}
 		return instance;
 	}
+	
 
 	private PlayerController() {
 		index = IndexSongs.getInstance();
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		playlistaux = index.GetSongsName();
 		playlistauxlongitude = playlistaux.size();
-		// player = Player.getInstance();
-		// player = new Player();
 
 	}
 
@@ -44,40 +43,42 @@ public class PlayerController {
 		List<String> newList = new ArrayList<String>();
 
 		if (controlador == true) {
-			
-			if(playlist.size()==1){
-				newList.add(playlist.get(0));}
-				else 
-					{newList.add(playlist.get(playlist_initial-1));}
-				int i = playlist_initial;
-				while (i < playlist.size()) {
-					
-					if(playlist.size()==1){
-					newList.add(playlist.get(0));}
-					else 
-						newList.add(playlist.get(i));
-					i++;
-				}
-				int i2 = currentsong+1;
-				while (i2 < playlistaux.size()) {
-					newList.add(playlistaux.get(i2));
-					i2++;
-				}
-			
-		}
 
-		if (controlador == false) {
+			if (playlist.size() == 1) {
+				newList.add("M_"+playlist.get(0));
+			} else {
+				newList.add("M_"+playlist.get(playlist_initial - 1));
+			}
 			int i = playlist_initial;
-			newList.add(playlistaux.get(currentsong));
 			while (i < playlist.size()) {
-				newList.add(playlist.get(i));
+
+				//if (playlist.size() == 1) {
+					//newList.add("M_"+playlist.get(0));
+			//	} else
+					newList.add("M_"+playlist.get(i));
 				i++;
 			}
 			int i2 = currentsong + 1;
 			while (i2 < playlistaux.size()) {
-				newList.add(playlistaux.get(i2));
+				newList.add("A_"+playlistaux.get(i2));
 				i2++;
 			}
+			//newList.addAll(playlistaux);
+		}
+
+		if (controlador == false) {
+			int i = playlist_initial;
+			newList.add("A_"+playlistaux.get(currentsong));
+			while (i < playlist.size()) {
+				newList.add("M_"+playlist.get(i));
+				i++;
+			}
+			int i2 = currentsong + 1;
+			while (i2 < playlistaux.size()) {
+				newList.add("A_"+playlistaux.get(i2));
+				i2++;
+			}
+			//newList.addAll(playlistaux);
 		}
 
 		return newList;
@@ -193,19 +194,26 @@ public class PlayerController {
 			System.out.println("HAY CANCIONES EN PLAYLIST");
 			playlist_initial++;
 			playlistlongitude++;
+//			String[] textElements1 = playlist.get(playlist_initial - 1).split("_");
+//			player.play(folder + textElements1[1]);
 			player.play(folder + playlist.get(playlist_initial - 1));
 
 		} else {
 			controlador = false;
+			
 			System.out.println("current vale" + currentsong + "del size "
 					+ playlistauxlongitude);
 			if (currentsong == playlistauxlongitude - 1) {
 				currentsong = 0;
+//				String[] textElements2 = playlistaux.get(currentsong).split("_");
+//				player.play(folder + textElements2[1]);
 				player.play(folder + playlistaux.get(currentsong));
 			} else {
 				System.out.println("NO hay de la playlist, nos vamosa "
 						+ currentsong);
 				currentsong++;
+				//String[] textElements3 = playlistaux.get(currentsong).split("_");
+				//player.play(folder + textElements3[1]);
 				player.play(folder + playlistaux.get(currentsong));
 			}
 		}
@@ -228,9 +236,7 @@ public class PlayerController {
 	public String initalizePlayer() throws FileNotFoundException,
 			JavaLayerException {
 		player = TestController.getInstance();
-		// player.play(folder + playlistaux.get(0));
 		player.play(folder + playlistaux.get(0));
-		// currentsong = playlistauxlongitude - 3;
 		currentsong++;
 		return null;
 	}
@@ -239,6 +245,7 @@ public class PlayerController {
 		System.out.println("recibimos esto" + nwsong);
 
 		playlist.add(nwsong);
+		System.out.println(playlist.get(0));
 		System.out.println("VALE HEMOS AÑADIDO LA PLAYLIST TIENE "
 				+ playlist.size() + "POSICIONES");
 		// System.out.println("LA LONG ES" + playlistlongitude);

@@ -1,5 +1,5 @@
-	var IP = "http://192.168.1.139:8080/jukebox"
-	//var IP = "http://10.189.165.158:8080/jukebox"
+	var IP = "http://localhost:8080/jukebox"
+	//var IP = "http://10.189.214.101:8080/jukebox"
 	var API_BASE_URL = IP + "/rest/api/";
 	var datacontrol;
 
@@ -215,7 +215,36 @@ function getplaylist() {
 					datacontrol=response;
 					$('#songs-data ').empty();
 					$.each(response, function(index, value) {
+
+						var str1 = "AUX";
+							var x = value.genre;
+							var n = x.localeCompare(str1);
+							
 						if (index == 0) {
+
+							
+							if(n== 0){
+
+							$('#songs-data').append("<a  ><div class='cancionA' id = " + value.id + " > <div class='imagen'>" +
+								"<img src=" + value.image + " ' class='img-responsive' alt=''>" +
+								"</div>" +
+								"<div class='textoCancion'>" +
+								"<div class='nameAutor'>" +
+								"<span class='nameSong'>" + value.Name + "</span>" +
+								"<span class='separacion'>-</span>" +
+								"<span class='autor'>" + value.Artist + "</span>" +
+
+								"</div>" +
+
+
+								"<div class='album'>" + index + "</div>" +
+								"<div class='duracion'>" + value.duration + "</div>" +
+
+								"</div>" +
+								"<div class='clear'></div>" +
+								"</div></a>");
+							}
+							else{
 
 							$('#songs-data').append("<a  ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
 								"<img src=" + value.image + " ' class='img-responsive' alt=''>" +
@@ -235,8 +264,31 @@ function getplaylist() {
 								"</div>" +
 								"<div class='clear'></div>" +
 								"</div></a>");
+							}
 						}
 						if (index != 0) {
+							if(n==0){
+							$('#songs-data').append("<a  ><div class='cancionA' id = " + value.id + " > <div class='imagen'>" +
+								"<img  ' class='img-responsive' alt=''>" +
+								"</div>" +
+
+								"<div >" +
+								"<div >" +
+								"<span >" + value.Name + "</span>" +
+								"<span >-</span>" +
+								"<span >" + value.Artist + "</span>" +
+
+								"</div>" +
+
+
+								"<div class>" + value.duration + "</div>" +
+
+								"</div>" +
+								"<div class='clear'></div>" +
+								"</div></a>");
+							}
+
+							else{
 							$('#songs-data').append("<a  ><div class='cancion' id = " + value.id + " > <div class='imagen'>" +
 								"<img  ' class='img-responsive' alt=''>" +
 								"</div>" +
@@ -255,6 +307,7 @@ function getplaylist() {
 								"</div>" +
 								"<div class='clear'></div>" +
 								"</div></a>");
+							}
 						}
 
 					});
@@ -284,12 +337,12 @@ function getSpotiSong(track) {
 			$('#songs-data').append("<a href='#' ><div class='cancion' id = " + data.id + " > <div class='imagen'>" +
 				"<img src=" + data.image + " ' class='img-responsive' alt=''>" +
 				"</div>" +
-				"<div class='textoCancion'>" +
+				"<div class='textoCancion'> " +
 				"<div class='nameAutor'>" +
 				"<span class='nameSong'>" + data.Name + "</span>" +
 				"<span class='separacion'>-</span>" +
 				"<span class='autor'>" + data.Artist + "</span>" +
-
+				
 				"</div>" +
 
 

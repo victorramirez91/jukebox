@@ -32,7 +32,7 @@ public class JukeboxLocalImp implements Jukebox {
 		playerc = PlayerController.getInstance();
 		is = IndexSongs.getInstance();
 		dbo = DBOperations.getInstance();
-		
+
 	}
 
 	public ArrayList<Song> getSongs() {
@@ -57,8 +57,7 @@ public class JukeboxLocalImp implements Jukebox {
 	}
 
 	public ArrayList<Song> getPlaylist() {
-		
-		
+
 		if (availableSongs == null) {
 			try {
 				availableSongs = is.getSongsObject();
@@ -72,35 +71,52 @@ public class JukeboxLocalImp implements Jukebox {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		System.out.println(availableSongs.size());
+			System.out.println(availableSongs.size());
 		}
-		
+
 		List<String> plst = playerc.getPlayList();
+
 		System.out.println("PLAYLIST SIZE" + plst.size());
 		ArrayList<Song> playlstsngs = new ArrayList<Song>();
 		int inc = 0;
-		System.out.println("CUANTO ES EL SIZE?" +plst.size());
+		System.out.println("CUANTO ES EL SIZE?" + plst.size());
 		while (plst.size() > inc) {
-			System.out
-					.println("dentro del primer  while  y esto vale el inc   "
-							+ inc);
-
+			Song tempobj = new Song();
+			String[] textElements = plst.get(inc).split("_");
 			int inc2 = 0;
-			System.out.println("DECLARAMOS INCC2 " +inc2);
-			System.out.println( "CUANTO ES AVAILABLE SONGS "+ availableSongs.size());
+
 			while (availableSongs.size() > inc2) {
-				System.out.println("dentro del segundo  while");
+				
 
-				if (plst.get(inc).equals(availableSongs.get(inc2).getId())) {
+				System.out.println("EL 1" + textElements[1]);
+				if (textElements[1].equals(availableSongs.get(inc2).getId())) {
 
-					playlstsngs.add(availableSongs.get(inc2));
+					tempobj = availableSongs.get(inc2);
+					
+					System.out.println("VALE " + textElements[0]);
+					//
+					if (textElements[0].equals("M")) {
+//						tempobj.setGenre("MAIN");
+						Song main = new Song();
+						main.setAlbum(availableSongs.get(inc2).getAlbum());
+						main.setArtist(availableSongs.get(inc2).getArtist());
+						main.setDuration(availableSongs.get(inc2).getDuration());
+						main.setGenre("MAIN");
+						main.setId(availableSongs.get(inc2).getId());
+						main.setImage(availableSongs.get(inc2).getImage());
+						main.setName(availableSongs.get(inc2).getName());
+						playlstsngs.add(main);
+
+					}
+					else{
+						//tempobj.setGenre("AUX");
+					playlstsngs.add(tempobj);}
 				}
 
 				inc2++;
 
 			}
 
-			System.out.println(inc);
 			inc++;
 		}
 		return playlstsngs;
@@ -109,37 +125,37 @@ public class JukeboxLocalImp implements Jukebox {
 
 	public ArrayList<Song> search(String term) {
 		ArrayList<Song> songssrch = new ArrayList<Song>();
-		
+
 		songssrch = dbo.searchSong(term);
 
-//		if (availableSongs == null) {
-//			try {
-//				availableSongs = is.getSongsObject();
-//			} catch (UnsupportedTagException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (InvalidDataException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//		System.out.println("VAMOS A BUSCAR EN LOCAL" + term);
-//		int in = 0;
-//		while (in < availableSongs.size()) {
-//			String cadena = availableSongs.get(in).getName();
-//			System.out.println("CADENA:     " + cadena);
-//			int resultado = cadena.indexOf(term);
-//			System.out.println("COINCIDENCIAS:     " + resultado);
-//			if (resultado != -1) {
-//
-//				songssrch.add(availableSongs.get(in));
-//			}
-//			in++;
-//		}
-		System.out.println("LA LONG EN LA IMPLEMENTACION: "+songssrch.size());
+		// if (availableSongs == null) {
+		// try {
+		// availableSongs = is.getSongsObject();
+		// } catch (UnsupportedTagException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (InvalidDataException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+		// System.out.println("VAMOS A BUSCAR EN LOCAL" + term);
+		// int in = 0;
+		// while (in < availableSongs.size()) {
+		// String cadena = availableSongs.get(in).getName();
+		// System.out.println("CADENA:     " + cadena);
+		// int resultado = cadena.indexOf(term);
+		// System.out.println("COINCIDENCIAS:     " + resultado);
+		// if (resultado != -1) {
+		//
+		// songssrch.add(availableSongs.get(in));
+		// }
+		// in++;
+		// }
+		System.out.println("LA LONG EN LA IMPLEMENTACION: " + songssrch.size());
 		return songssrch;
 
 	}
@@ -148,6 +164,7 @@ public class JukeboxLocalImp implements Jukebox {
 		System.out.println("Queremos añadir " + songId
 				+ "a la lista de reproduccion");
 		String newsg = songId.replace("_", "'");
+		// String newsg2 = newsg.replace(":", "&");
 		System.out.println("Despues de substituir tenemos " + newsg + "...");
 		playerc.addSongToPlayList(newsg);
 

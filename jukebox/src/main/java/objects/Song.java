@@ -13,7 +13,10 @@ public class Song {
 	String duration;
 	String image;
 	String album;
-
+	public Song (Song s)
+	{
+		
+	}
 	
 	
 	public String getDuration() {

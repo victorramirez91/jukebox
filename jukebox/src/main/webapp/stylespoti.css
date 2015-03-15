@@ -1,165 +1,201 @@
-@import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet");
-@import url("http://fonts.googleapis.com/css?family=Oswald:400,700,300");
-@import url("http://fonts.googleapis.com/css?family=Oswald:400,700,300");
-	body{
-		margin: 0px;
-		font-family: 'Oswald', sans-serif;
-	}
-	header{
-		background: #00445e;
-		float: left;
-		
-top:0;
-		width: 100%;
-	}
-	a{
-		color: black;
-	}
-	input {
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-        border-radius: 10px;
-        border: 1px solid #000000;
-        padding: 0 4px 0 4px;
-        float: left;
-margin-top: 17px;
-margin-right: 10px;
-background: #7990D8;
-     }
-	.titular {
+@import
+url(
+"http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+rel
+="stylesheet");
+@import url("http://fonts.googleapis.com/css?family=Oswald:400,700,300")
+	;
 
-float: left;
-padding-left: 15px;
+@import url("http://fonts.googleapis.com/css?family=Oswald:400,700,300")
+	;
+
+body {
+	margin: 0px;
+	font-family: 'Oswald', sans-serif;
 }
-	h1.titulo{
-		color: #ed9e46;
-		font-family: 'Kaushan Script', cursive;
-	}
-	.btnRecomendados {
 
+header {
+	background: #00445e;
+	float: left;
+	top: 0;
+	width: 100%;
+}
+
+a {
+	color: black;
+}
+
+input {
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border: 1px solid #000000;
+	padding: 0 4px 0 4px;
+	float: left;
+	margin-top: 17px;
+	margin-right: 10px;
+	background: #1de9b6;
+}
+
+.titular {
+	float: left;
+	padding-left: 15px;
+}
+
+h1.titulo {
+	color: #ed9e46;
+	font-family: 'Kaushan Script', cursive;
+}
+
+.btnRecomendados {
 	float: left;
 	width: 50%;
 	text-align: center;
 	background: #45afdc;
 	padding: 0.5em 0em;
 	text-transform: uppercase;
+	color: black;
+}
+
+#cavailable {
+	background: #1de9b6;
+	color: white;
+}
+
+#playlist {
+	color: black;
+}
+
+.img-responsive {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+.container {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.titulo {
+	margin: 0px;
+}
+
+@media ( min-width : 768px) {
+	.container {
+		width: 750px;
 	}
-	.img-responsive{
-		display: block;
-	  max-width: 100%;
-	  height: auto;
+}
+
+@media ( min-width : 992px) {
+	.container {
+		width: 960px;
 	}
-	.btnRecomendados:last-child{
-		color: white;
+}
+
+@media ( min-width : 1200px) {
+	.container {
+		width: 960px;
 	}
-		.container {
-		  padding-right: 15px;
-		  padding-left: 15px;
-		  margin-right: auto;
-		  margin-left: auto;
-		}
-		.titulo{
-			margin:0px;
-		}
-		@media (min-width: 768px) {
-		  .container {
-		    width: 750px;
-		  }
-		}
-		@media (min-width: 992px) {
-		  .container {
-		    width: 960px;
-		  }
-		}
-		@media (min-width: 1200px) {
-		  .container {
-		    width: 960px;
-		  }
-		}
-		.row {
-		  margin-right: -15px;
-		  margin-left: -15px;
-		}
-		.row:after{
-			clear: both;
-		}
+}
+
+.row {
+	margin-right: -15px;
+	margin-left: -15px;
+}
+
+.row:after {
+	clear: both;
+}
+
 .contenedorCanciones {
-float: left;
-width: 100%;
-box-sizing: border-box;
-padding: 0px 15px;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0px 15px;
 }
+
 .imagen {
-width: 30%;
-float: left;
+	width: 30%;
+	float: left;
 }
+
 .textoCancion {
-width: 70%;
-box-sizing: border-box;
-padding: 0px 15px;
-float: left;
+	width: 70%;
+	box-sizing: border-box;
+	padding: 0px 15px;
+	float: left;
 }
+
 .contenedorBotones {
-float: left;
-width: 100%;
+	float: left;
+	width: 100%;
 }
+
 .cancion {
-float: left;
-width: 100%;
-border-bottom: 3px solid black;
-padding: 15px 0px;
+	float: left;
+	width: 100%;
+	border-bottom: 3px solid black;
+	padding: 15px 0px;
 }
+
 .nameAutor {
-font-weight: bold;
-font-size: 30px;
+	font-weight: bold;
+	font-size: 30px;
 }
+
 .album {
-float: left;
-margin-top: 59px;
-font-size: 20px;
+	float: left;
+	margin-top: 59px;
+	font-size: 20px;
 }
+
 .duracion {
-float: right;
-margin-top: 44px;
-font-weight: bold;
-font-size: 30px;
+	float: right;
+	margin-top: 44px;
+	font-weight: bold;
+	font-size: 30px;
 }
+
 i.fa.fa-search {
-color: #ed9e46;
-padding-right: 15px;
-font-size: 26px;
-margin-top: 10px;
+	color: #ed9e46;
+	padding-right: 15px;
+	font-size: 26px;
+	margin-top: 10px;
 }
+
 .buscador {
-float: right;
+	float: right;
 }
 
 @media screen and (max-width: 515px) {
-.nameAutor {
-font-weight: bold;
-font-size: 20px;
+	.nameAutor {
+		font-weight: bold;
+		font-size: 15px;
+	}
+	.album {
+		float: left;
+		margin-top: 28px;
+		font-size: 15px;
+	}
+	.duracion {
+		float: right;
+		margin-top: 24px;
+		font-weight: bold;
+		font-size: 20px;
+	}
+	input {
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+		border: 1px solid #000000;
+		padding: 0 4px 0 4px;
+		float: left;
+		max-width: 95px;
+		margin-top: 14px;
+		margin-right: 10px;
+		background: #1de9b6;
+	}
 }
-.album {
-float: left;
-margin-top: 28px;
-font-size: 15px;
-}
-.duracion {
-float: right;
-margin-top: 24px;
-font-weight: bold;
-font-size: 20px;
-}
-input {
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-        border-radius: 10px;
-        border: 1px solid #000000;
-        padding: 0 4px 0 4px;
-        float: left;
-        max-width: 95px;
-       	
-margin-top: 14px;
-margin-right: 10px;
-background: #7990D8;
-     }

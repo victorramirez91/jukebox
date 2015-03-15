@@ -24,7 +24,7 @@ top:0;
         float: left;
 margin-top: 17px;
 margin-right: 10px;
-background: #7990D8;
+background: #1de9b6;
      }
 	.titular {
 
@@ -44,14 +44,23 @@ padding-left: 15px;
 	padding: 0.5em 0em;
 	text-transform: uppercase;
 	}
+	#cplaylist {
+	background: #1de9b6;
+	 color: white;
+
+
+
+	
+	
+}
+
 	.img-responsive{
 		display: block;
 	  max-width: 100%;
 	  height: auto;
+
 	}
-	.btnRecomendados:last-child{
-		color: white;
-	}
+	
 		.container {
 		  padding-right: 15px;
 		  padding-left: 15px;
@@ -94,7 +103,7 @@ width: 30%;
 float: left;
 }
 .textoCancion {
-width: 70%;
+width: 60%;
 box-sizing: border-box;
 padding: 0px 15px;
 float: left;
@@ -103,11 +112,21 @@ float: left;
 float: left;
 width: 100%;
 }
+.cancionA {
+float: left;
+width: 100%;
+border-bottom: 3px solid black;
+padding: 15px 0px;
+padding-left: 15px;
+
+}
 .cancion {
 float: left;
 width: 100%;
 border-bottom: 3px solid black;
 padding: 15px 0px;
+background: #B9F6CA;
+padding-left: 15px;
 }
 .nameAutor {
 font-weight: bold;
@@ -161,5 +180,5 @@ input {
        	
 margin-top: 14px;
 margin-right: 10px;
-background: #7990D8;
+background: #1de9b6;
      }

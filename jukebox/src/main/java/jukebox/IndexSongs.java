@@ -146,14 +146,15 @@ public class IndexSongs {
 					sg.setDuration(timemin);
 
 					String idx = songs.get(i).replace("'", "_");
+					//String idx2 = idx.replace("&", ":");
 					sg.setId(idx);
 
-					if (id3v2Tag.getGenre() == -1) {
-						sg.setGenre("no info");
-					}
-					if (id3v2Tag.getGenre() != -1) {
-						sg.setGenre(id3v2Tag.getGenreDescription());
-					}
+//					if (id3v2Tag.getGenre() == -1) {
+//						sg.setGenre("no info");
+//					}
+//					if (id3v2Tag.getGenre() != -1) {
+						sg.setGenre("AUX");
+//					}
 
 					byte[] albumImageData = id3v2Tag.getAlbumImage();
 					if (albumImageData != null) {
