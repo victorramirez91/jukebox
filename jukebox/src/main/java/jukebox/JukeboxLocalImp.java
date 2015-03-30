@@ -89,8 +89,9 @@ public class JukeboxLocalImp implements Jukebox {
 				
 
 				System.out.println("EL 1" + textElements[1]);
-				if (textElements[1].equals(availableSongs.get(inc2).getId())) {
-
+				String newsgx = availableSongs.get(inc2).getId().replace("_", "'");
+				//if (textElements[1].equals(availableSongs.get(inc2).getId())) {
+				if (textElements[1].equals(newsgx)) {
 					tempobj = availableSongs.get(inc2);
 					
 					System.out.println("VALE " + textElements[0]);

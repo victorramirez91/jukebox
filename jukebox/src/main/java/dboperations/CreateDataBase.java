@@ -18,16 +18,13 @@ public class CreateDataBase {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		AnnotationConfiguration config = new AnnotationConfiguration();
 		config.addAnnotatedClass(Ticket.class);
 		config.addAnnotatedClass(ClientIP.class);
 		config.addAnnotatedClass(Folder.class);
 		config.addAnnotatedClass(Song.class);
 		config.configure();
-		
-	
-		
 		new SchemaExport (config).create(true, true);
 		
 		//hibernate session

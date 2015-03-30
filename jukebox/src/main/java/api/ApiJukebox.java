@@ -1,13 +1,21 @@
 package api;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
@@ -17,6 +25,7 @@ import javazoom.jl.decoder.JavaLayerException;
 import objects.Song;
 import objects.Ticket;
 import objects.TrackMaped;
+import objects.UserAdmin;
 import player.PlayerController;
 import player.TestController;
 import jukebox.IndexSongs;
@@ -26,6 +35,7 @@ import spotify.SpotifyOperations;
 import clases.TicketGen;
 
 import com.google.gson.Gson;
+import com.wrapper.spotify.exceptions.BadRequestException;
 import com.wrapper.spotify.exceptions.WebApiException;
 import com.wrapper.spotify.models.Track;
 
@@ -33,15 +43,99 @@ import dboperations.DBOperations;
 
 @Path("/api")
 public class ApiJukebox {
-
+	
 	List<Track> result_s = new ArrayList<Track>();
 	SpotifyOperations op = SpotifyOperations.getInstance();
 	DBOperations opdb;
-	
+	String clave = "abcdefgg";
+
 	//Se debe indicar cuál es la implementacion!
 	//JukeboxSpotifyImpl jukebox = new JukeboxSpotifyImpl();
 	JukeboxLocalImp jukebox = JukeboxLocalImp.getInstance();
 
+	@Path("/login/{username}/{password}")
+	@GET
+	
+	public String login(@PathParam("username") String username, @PathParam("password") String password) throws BadRequestException {
+		System.out.println("Entramos al metodo");
+		byte[] key = new byte[64];
+		new SecureRandom().nextBytes(key);
+		System.out.println(key);
+		
+		String compact="";
+		if (username == null || password == null)
+			throw new BadRequestException("username and password cannot be null.");
+
+//		String pwdDigest = DigestUtils.md5Hex(UserAdmin.getUserpass()); //calculamos el md5 de la contraseña
+//		String storedPwd = getUserFromDatabase(UserAdmin.getUsername(), true) //nos devuelve el pasword en md5 y en hexadecimal y se puede comparar con el de la base de datos y que sean iguales
+//				.getUserpass();
+			UserAdmin usr = new UserAdmin("", "");
+		//UserAdmin.setLoginSuccessful(pwdDigest.equals(storedPwd)); //ponemos el atributo de login si es true o false si coinciden
+		if (username.equals("admin") && password.equals("admin"))
+	
+		{	usr.setUsername(username);
+			usr.setLoginSuccessful(true);
+			java.util.Date date = new Date();
+			System.out.println (date);
+			 long lnMilisegundos = date.getTime();
+			 long expiration = lnMilisegundos+30000;
+			 Date expd = new Date(expiration);
+			 compact = Jwts.builder().setExpiration(expd).setSubject("Joe").signWith(SignatureAlgorithm.HS256, clave).compact();
+			 usr.setKey(compact);}
+		else
+			compact= "error login";
+		Gson gson2 = new Gson();
+		String json_key = gson2.toJson(usr);
+		
+		return json_key;
+		
+	}
+	
+	@Path("/checkJWT")
+	@POST
+	//@Consumes("application/json")	
+	public String register(String data) {		
+		//System.out.println(key);
+//		byte[] key2 = new byte[64];
+//		new SecureRandom().nextBytes(key2);
+		System.out.println("esto es checking");
+			try {
+				System.out.println(1);
+				Jwts.parser().setSigningKey(clave).parse(data);
+				System.out.println(2);
+				Date exp2 = Jwts.parser().setSigningKey(clave).parseClaimsJws(data).getBody().getExpiration();
+				
+				java.util.Date date2 = new Date();
+				System.out.println("VAMOS A COMPROVAR QE LA EXP "+exp2+ "con la local "+date2);
+				if(exp2.before(date2))
+				{
+					 return "ko";
+				}
+				else{
+				Ticket tiq = new Ticket();
+				TicketGen gen = new TicketGen();
+				try {
+					tiq = gen.genticket();
+				} catch (UnsupportedEncodingException e) {
+
+					e.printStackTrace();
+				}
+				Gson gson = new Gson();
+				String jsonservert = gson.toJson(tiq);
+				System.out.println(jsonservert);
+				return jsonservert;
+				}
+			} catch (Exception e) {
+				
+				return "ko";
+			}
+		    
+			
+		
+	
+ }
+	
+	
 	@GET
 	@Path("/play")
 	public void getMsg(@PathParam("param") String msg) {

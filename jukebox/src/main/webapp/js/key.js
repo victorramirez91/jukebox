@@ -28,12 +28,21 @@ $("#cplaylist").click(function(){
 	});
 $("#key_button").click(function(){
 	var idpet = getURLParameter('id');
-	var keyins = $('#key_input').val();
+	var keyins = $('#icon_prefix').val();
 	if (keyins  == '') { alert ('No puedes dejar este campo en blanco')}; 
 	if (keyins  != '') { check_key (idpet,keyins)}; 
 	
 	
 	});
+$("#insertkey").click(function(){
+	var idpet = getURLParameter('id');
+	var keyins = $('#icon_prefix').val();
+	if (keyins  == '') { alert ('No puedes dejar este campo en blanco')}; 
+	if (keyins  != '') { check_key (idpet,keyins)}; 
+	
+	
+	});
+
 
 $("#back_button").click(function(){
 	var url      = window.location.href;
@@ -42,5 +51,10 @@ $("#back_button").click(function(){
 $("#cavailable").click(function(){
 	
 	window.location='SearchSong.html'
-		getavailablesongs();
+		
+	});
+$("#goback").click(function(){
+	
+	window.location='SearchSong.html'
+		
 	});

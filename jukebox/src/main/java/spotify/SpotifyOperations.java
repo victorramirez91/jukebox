@@ -46,18 +46,8 @@ public class SpotifyOperations {
     public int addSong(String track) throws IOException, WebApiException
     {
     	
-    	 final RefreshAccessTokenRequest request = api
- 	            .refreshAccessToken()
- 	            
- 	            .build();
- 	 RefreshAccessTokenCredentials refreshAccessTokenResponse = request.get();
- 	
- 	 
- 	  System.out.println(refreshAccessTokenResponse.getExpiresIn());;
- 	  System.out.println(refreshAccessTokenResponse.getAccessToken());
- 	  System.out.println(refreshAccessTokenResponse.getTokenType());
- 	 
- 	 
+    final RefreshAccessTokenRequest request = api.refreshAccessToken().build();
+ 	RefreshAccessTokenCredentials refreshAccessTokenResponse = request.get();
  	api.setAccessToken(refreshAccessTokenResponse.getAccessToken());
  	
 	   
@@ -90,7 +80,7 @@ public class SpotifyOperations {
     	   final Page<Track> trackSearchResult = request.get();
     	   System.out.println("I got " + trackSearchResult.getTotal() + " results!");
     	   //umero maximo de resultados
-    	  // trackSearchResult.setLimit(200);
+    	   trackSearchResult.setLimit(20);
     	   return trackSearchResult.getItems();
     	   
     	} catch (Exception e) {

@@ -1,382 +1,88 @@
 
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="ISO-8859-1">
-<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
 <link rel="stylesheet" type="text/css" href="insertkey.css">
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+<link
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700'
+	rel='stylesheet' type='text/css'>
 <!-- 	 <link rel="import" href="http://www.polymer-project.org/components/paper-ripple/paper-ripple.html"> -->
- <!--  <link rel="import" href="http://www.polymer-project.org/components/core-icons/core-icons.html">
+<!--  <link rel="import" href="http://www.polymer-project.org/components/core-icons/core-icons.html">
   <link rel="import" href="http://www.polymer-project.org/components/font-roboto/roboto.html"> -->
-
+<link type="text/css" rel="stylesheet"
+	href="materialize/css/materialize.min.css" media="screen,projection" />
 <style type="text/css">
-    #track {
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-        border-radius: 10px;
-        border: 1px solid #000000;
-        padding: 0 4px 0 4px;
-     }
-.group            { 
-  position:relative; 
-  margin-bottom:45px; 
+#track {
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border: 1px solid #000000;
+	padding: 0 4px 0 4px;
 }
-#keymd               {
-  font-size:18px;
-  padding:10px 10px 10px 5px;
-  display:block;
-  width:300px;
-  border:none;
-  border-bottom:1px solid #757575;
-}
-#keymd:focus         { outline:none; }
-
-/* LABEL ======================================= */
-label                {
-  color:#999; 
-  font-size:18px;
-  font-weight:normal;
-  /* position:absolute; */
-  
-  pointer-events:none;
-  left:5px;
-  top:10px;
-  transition:0.2s ease all; 
-  -moz-transition:0.2s ease all; 
-  -webkit-transition:0.2s ease all;
-}
-
-/* active state */
-#keymd:focus ~ label, #keymd:valid ~ label        {
-  top:-20px;
-  font-size:14px;
-  color:#1de9b6;
-}
-
-/* BOTTOM BARS ================================= */
-.bar    { position:relative; display:block; width:300px; }
-.bar:before, .bar:after     {
-  content:'';
-  height:2px; 
-  width:0;
-  bottom:1px; 
-  position:absolute;
-  background:#1de9b6; 
-  transition:0.2s ease all; 
-  -moz-transition:0.2s ease all; 
-  -webkit-transition:0.2s ease all;
-}
-.bar:before {
-  left:50%;
-}
-.bar:after {
-  right:50%; 
-}
-
-/* active state */
-#keymd:focus ~ .bar:before, #keymd:focus ~ .bar:after {
-  width:50%;
-}
-
-/* HIGHLIGHTER ================================== */
-.highlight {
- /* position:absolute;*/
-  height:60%; 
-  width:100px; 
-  top:25%; 
-  left:0;
-  pointer-events:none;
-  opacity:0.5;
-}
-
-/* active state */
-#keymd:focus ~ .highlight {
-  -webkit-animation:inputHighlighter 0.3s ease;
-  -moz-animation:inputHighlighter 0.3s ease;
-  animation:inputHighlighter 0.3s ease;
-}
-
-/* ANIMATIONS ================ */
-@-webkit-keyframes inputHighlighter {
-    from { background:#1de9b6; }
-  to    { width:0; background:transparent; }
-}
-@-moz-keyframes inputHighlighter {
-    from { background:#1de9b6; }
-  to    { width:0; background:transparent; }
-}
-@keyframes inputHighlighter {
-    from { background:#1de9b6; }
-  to    { width:0; background:transparent; }
-}
-
-.button {
-      display: inline-block;
-      position: relative;
-      width: 120px;
-      height: 32px;
-      line-height: 32px;
-      border-radius: 2px;
-      font-size: 0.9em;
-      background-color: #fff;
-      color: #646464;
-       -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
-      -webkit-touch-callout: none;
-    }
-     
-    
-    .button > paper-ripple {
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    
-    .button.narrow {
-      width: 60px;
-    }
-    
-    .button.grey {
-      background-color: #eee;
-    }
-    
-    .button.blue {
-      background-color: #4285f4;
-      color: #fff;
-    }
-    
-    .button.green {
-      background-color: #0f9d58;
-      color: #fff;
-    }
-    
-    .button.raised {
-      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      transition-delay: 0.2s;
-      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    }
-    
-    .button.raised:active {
-      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
-      transition-delay: 0s;
-    }
-    
-    /* Icon Button */
-    .icon-button {
-      position: relative;
-      display: inline-block;
-      width: 56px;
-      height: 56px;
-    }
-    
-    .icon-button > core-icon {
-      margin: 16px;
-      transition: -webkit-transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .icon-button:hover > core-icon {
-      -webkit-transform: scale(1.2);
-      transform: scale(1.2);
-    }
-    
-    .icon-button > paper-ripple {
-      overflow: hidden;
-      color: #646464;
-    }
-    
-    .icon-button.red > core-icon::shadow path {
-      fill: #db4437;
-    }
-    
-    .icon-button.red > paper-ripple {
-      color: #db4437;
-    }
-    
-    .icon-button.blue > core-icon::shadow path {
-      fill: #4285f4;
-    }
-    
-    .icon-button.blue > paper-ripple {
-      color: #4285f4;
-    }
-    
-    /* FAB */
-    .fab {
-      position: relative;
-      display: inline-block;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      color: #fff;
-      overflow: hidden;
-      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      transition-delay: 0.2s;
-      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    }
-    
-    .fab.red {
-      background-color: #d23f31;
-    }
-    
-    .fab.blue {
-      background-color: #4285f4;
-    }
-    
-    .fab.green {
-      background-color: #0f9d58;
-    }
-    
-    .fab:active {
-      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
-      transition-delay: 0s;
-    }
-    
-    .fab > core-icon {
-      margin: 16px;
-    }
-    
-    .fab > core-icon::shadow path {
-      fill: #fff;
-    }
-    
-    /* Menu */
-    .menu {
-      display: inline-block;
-      width: 180px;
-      background-color: #fff;
-      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
-    }
-    
-    .item {
-      position: relative;
-      height: 48px;
-      line-height: 48px;
-      color: #646464;
-      font-size: 0.9em;
-    }
-    
-    .menu.blue > .item {
-      color: #4285f4;
-    }
-    
-    /* Card, Dialog */
-    .card, .dialog {
-      position: relative;
-      display: inline-block;
-      width: 300px;
-      height: 240px;
-      vertical-align: top;
-      background-color: #fff;
-      box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
-    }
-    
-    .dialog {
-      box-sizing: border-box;
-      padding: 16px;
-    }
-    
-    .dialog > .content {
-      height: 170px;
-      font-size: 0.9em;
-    }
-    
-    .dialog > .content > .title {
-      font-size: 1.3em;
-    }
-    
-    .dialog > .button {
-      width: 90px;
-      float: right;
-    }
-    
-    .card.image {
-      background: url(http://lorempixel.com/300/240/nature/);
-      color: #fff;
-    }
-    
-    /* Misc */
-    .center {
-      text-align: center;
-    }
-    
-    .label {
-      padding: 0 16px;
-    }
-    
-    .label-blue {
-      color: #4285f4; 
-    }
-    
-    .label-red {
-      color: #d23f31; 
-    }
-    
-
 </style>
 
 <title>Jukebox</title>
 </head>
 <body>
-<header>
-				<div class="titular">
-					<h1 class="titulo">Jukebox</h1>
+	<header>
+		<div class="titular">
+			<h1 class="titulo">Jukebox</h1>
 
-				</div>
-				<div class="buscador">
-			<i class="fa fa-search" id="searchsg1"></i> <input type="text"
-				id="track"></div>
-			</header>
+		</div>
+		<div class="buscador">
+			<i class="fa fa-search" id="searchsg1"></i> <input type="search"
+				id="track">
+		</div>
+	</header>
 
 
-<div class="contenedorBotones">
+	<div class="contenedorBotones">
 		<div class="btnRecomendados" id="cavailable">Disponibles</div>
 		<div class="btnRecomendados" id="cplaylist">Playlist</div>
 	</div>
 
 
 
-<label id="response"></label>
+	<label id="response"></label>
+	<label > Para poner la canción en cola debes introducir la clave</label>
 
-<div class='buttonsx'>
-	<label id="key_label">Introduce el codigo que te han subministrado:</label>
-<input  type="text" id="key_input">
-<button type="button" class="button" id="key_button">Aceptar</button>
+	<div class="contenedorCanciones" id="songs-data"></div>
+	<div class="container"></div>
 
-</div>
-<div class="contenedorCanciones" id="songs-data"></div>
-<div class="container"></div>
-  
- 
-  	
-  
-  <form>
-    
-    <div class="group">      
-      <input id ="keymd"type="text" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>Introduce el codigo que te han subministrado:</label>
-      <div class="button raised">
-      <div class="center" fit>SUBMIT</div>
-      <paper-ripple fit></paper-ripple>
-    </div>
-    
-    </div>
-      
-   
-    
-  </form>
 
-<script
+
+	<div class="row">
+		<form class="col s12">
+			<div class="row">
+				<div class="input-field col s6">
+					<i class="medium mdi-communication-vpn-key prefix"></i> <input
+						id="icon_prefix" type="text" class="validate"> <label
+						for="icon_prefix">Insert key</label>
+				</div>
+				<div class="input-field col s6">
+					<a id="insertkey" class="waves-effect    teal accent-3 btn">Aceptar</a>
+					<a id="goback" class="waves-effect  red lighten-1 btn">Back </a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+
+	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/key.js"></script>
-<script type="text/javascript" src="js/api.js"></script>
+	<script type="text/javascript" src="js/key.js"></script>
+	<script type="text/javascript" src="js/api.js"></script>
+	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
 </body>
 </html>
