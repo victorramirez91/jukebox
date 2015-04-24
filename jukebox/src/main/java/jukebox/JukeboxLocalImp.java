@@ -90,8 +90,9 @@ public class JukeboxLocalImp implements Jukebox {
 
 				System.out.println("EL 1" + textElements[1]);
 				String newsgx = availableSongs.get(inc2).getId().replace("_", "'");
+				String newsgx2 = newsgx.replace("|", "&");
 				//if (textElements[1].equals(availableSongs.get(inc2).getId())) {
-				if (textElements[1].equals(newsgx)) {
+				if (textElements[1].equals(newsgx2)) {
 					tempobj = availableSongs.get(inc2);
 					
 					System.out.println("VALE " + textElements[0]);
@@ -165,9 +166,10 @@ public class JukeboxLocalImp implements Jukebox {
 		System.out.println("Queremos añadir " + songId
 				+ "a la lista de reproduccion");
 		String newsg = songId.replace("_", "'");
+		String newsg2 = newsg.replace("|", "&");
 		// String newsg2 = newsg.replace(":", "&");
-		System.out.println("Despues de substituir tenemos " + newsg + "...");
-		playerc.addSongToPlayList(newsg);
+		System.out.println("Despues de substituir tenemos " + newsg2 + "...");
+		playerc.addSongToPlayList(newsg2);
 
 		return 0;
 	}

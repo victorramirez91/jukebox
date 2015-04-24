@@ -146,8 +146,8 @@ public class IndexSongs {
 					sg.setDuration(timemin);
 
 					String idx = songs.get(i).replace("'", "_");
-					//String idx2 = idx.replace("&", ":");
-					sg.setId(idx);
+					String idx2 = idx.replace("&", "|");
+					sg.setId(idx2);
 
 //					if (id3v2Tag.getGenre() == -1) {
 //						sg.setGenre("no info");

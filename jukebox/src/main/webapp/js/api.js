@@ -1,5 +1,5 @@
-var IP = "http://192.168.1.135:8080/jukebox"
-	//var IP = "http://localhost:8080/jukebox"
+//var IP = "http://192.168.1.135:8080/jukebox"
+	var IP = "http://localhost:8080/jukebox"
 	var API_BASE_URL = IP + "/rest/api/";
 	var datacontrol;
 
