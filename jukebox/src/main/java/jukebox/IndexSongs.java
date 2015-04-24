@@ -196,8 +196,13 @@ public class IndexSongs {
 		ImageInputStream iis = ImageIO.createImageInputStream(source);
 		reader.setInput(iis, true);
 		ImageReadParam param = reader.getDefaultReadParam();
-
-		Image image = reader.read(0, param);
+		Image image=null;
+		try {
+			 image = reader.read(0, param);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		// got an image file
 
 		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
