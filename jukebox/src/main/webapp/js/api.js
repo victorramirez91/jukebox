@@ -1,6 +1,6 @@
-//var IP = "http://192.168.1.135:8080/jukebox"
-	var IP = "http://localhost:8080/jukebox"
-	var API_BASE_URL = IP + "/rest/api/";
+var IP = "http://10.189.112.36:8080/jukebox"
+	//var IP = "http://localhost:8080/jukebox"
+	var API_BASE_URL = "/jukebox/rest/api/";
 	var datacontrol;
 
 	function getticket() {
@@ -87,13 +87,17 @@ function stopplayer() {
 			success: function(data, status, jqxhr) {
 
 				alert(data)
-				$('#songs-data ').empty();
-				$('#key_input').hide();
-				$('#key_button').hide();
-				$('#back_button').show();
-				$('#key_label').hide();
+//				$('#songs-data ').empty();
+//				$('#key_input').hide();
+//				$('#key_button').hide();
+//				$('#back_button').show();
+//				$('#key_label').hide();
 				$("#response").html(data);
-
+				if (data == 'El ticket es correcto:0') {
+					window.location.replace("Playlist.html");
+					
+				}
+				
 
 			},
 			error: function(jqXHR, options, error) {
@@ -237,7 +241,7 @@ function getplaylist() {
 								"</div>" +
 
 
-								"<div class='album'>" + index + "</div>" +
+								"<div class='album'>" +value.album+"</div>" +
 								"<div class='duracion'>" + value.duration + "</div>" +
 
 								"</div>" +
@@ -258,7 +262,7 @@ function getplaylist() {
 								"</div>" +
 
 
-								"<div class='album'>" + index + "</div>" +
+								"<div class='album'>"  +value.album+ "</div>" +
 								"<div class='duracion'>" + value.duration + "</div>" +
 
 								"</div>" +
